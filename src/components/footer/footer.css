@@ -1,0 +1,251 @@
+.footer {
+    background: var(--wine);
+    color: var(--gold);
+    margin-top: 100px;
+}
+
+.footer__inner {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 48px;
+    padding: 72px 20px 48px;
+}
+
+/* ---------- Логотип и описание ---------- */
+.footer__logo {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    line-height: 1;
+}
+
+.footer__logo span:first-child {
+    color: var(--white);
+}
+
+.footer__desc {
+    opacity: 0.7;
+    line-height: 1.6;
+    margin: 0 0 24px;
+    font-size: 14px;
+    max-width: 420px;
+}
+
+/* ---------- Соцсети ---------- */
+.footer__socials {
+    display: flex;
+    gap: 12px;
+}
+
+.footer__socials a {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(238, 186, 109, 0.12);
+    color: var(--gold);
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.footer__socials a:hover {
+    background: var(--gold);
+    color: var(--wine);
+    transform: translateY(-3px);
+}
+
+.footer__socials a:active {
+    transform: translateY(-1px);
+}
+
+.footer__socials a:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 2px;
+}
+
+/* ---------- Правая колонка (контакты) ---------- */
+.footer__heading {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 20px;
+    color: var(--white);
+    letter-spacing: 0.01em;
+}
+
+.footer__contacts {
+    font-style: normal;
+    /* <address> по умолчанию курсив */
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.footer__contacts a,
+.footer__contacts .footer__text {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    font-size: 14px;
+    line-height: 1.45;
+    opacity: 0.85;
+    color: inherit;
+    transition: opacity 0.25s ease, color 0.25s ease;
+}
+
+.footer__contacts a:hover {
+    opacity: 1;
+    color: var(--white);
+}
+
+.footer__contacts a:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+
+.footer__contacts svg {
+    font-size: 18px;
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 2px;
+    /* выравнивание иконки по первой строке текста */
+}
+
+/* ---------- Нижняя строка ---------- */
+.footer__bottom {
+    border-top: 1px solid rgba(238, 186, 109, 0.15);
+    padding: 24px 0;
+    font-size: 13px;
+    opacity: 0.6;
+}
+
+.footer__bottom-inner {
+    text-align: center;
+}
+
+/* ---------- Планшет ---------- */
+@media (max-width: 800px) {
+    .footer {
+        margin-top: 72px;
+    }
+
+    .footer__inner {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        padding: 56px 20px 40px;
+    }
+
+    .footer__desc {
+        max-width: none;
+    }
+}
+
+/* ---------- Мобильный ---------- */
+@media (max-width: 480px) {
+    .footer {
+        margin-top: 56px;
+    }
+
+    .footer__inner {
+        padding: 40px 16px 32px;
+        gap: 28px;
+    }
+
+    .footer__logo {
+        font-size: 24px;
+    }
+
+    .footer__desc {
+        font-size: 13.5px;
+    }
+
+    .footer__socials a {
+        width: 40px;
+        height: 40px;
+        font-size: 17px;
+    }
+
+    .footer__heading {
+        font-size: 15px;
+        margin-bottom: 14px;
+    }
+
+    .footer__contacts a,
+    .footer__contacts .footer__text {
+        font-size: 13.5px;
+        padding: 6px 0;
+    }
+
+    .footer__bottom {
+        padding: 18px 0 calc(18px + env(safe-area-inset-bottom, 0px));
+        font-size: 12px;
+    }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+
+    .footer__socials a,
+    .footer__contacts a {
+        transition: none !important;
+    }
+}
+
+/* ---------- Нижняя строка ---------- */
+.footer__bottom {
+    border-top: 1px solid rgba(238, 186, 109, 0.15);
+    padding: 24px 0;
+    font-size: 13px;
+    opacity: 0.6;
+}
+
+.footer__bottom-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 16px;
+    flex-wrap: wrap;
+}
+
+.footer__copy {
+    white-space: nowrap;
+}
+
+.footer__dev {
+    white-space: nowrap;
+}
+
+.footer__dev a {
+    color: var(--gold);
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.footer__dev a:hover {
+    color: var(--white);
+    border-bottom-color: var(--white);
+}
+
+.footer__dev a:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+/* ---------- Мобильный — в столбик по центру ---------- */
+@media (max-width: 480px) {
+    .footer__bottom-inner {
+        flex-direction: column;
+        justify-content: center;
+        gap: 6px;
+        text-align: center;
+    }
+}

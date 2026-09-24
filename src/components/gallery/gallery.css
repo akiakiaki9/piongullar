@@ -1,0 +1,255 @@
+.gallery {
+    position: relative;
+    padding: 80px 0;
+}
+
+/* ---------- Head ---------- */
+.gallery__head {
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto 56px;
+}
+
+.gallery__eyebrow {
+    display: inline-block;
+    color: var(--gold);
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+}
+
+.gallery__title {
+    font-size: clamp(28px, 5vw, 56px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    color: var(--wine);
+    margin: 12px 0 16px;
+}
+
+.gallery__title span {
+    color: var(--gold);
+}
+
+.gallery__desc {
+    font-size: 16px;
+    line-height: 1.55;
+    color: rgba(53, 3, 6, 0.6);
+    margin: 0;
+}
+
+/* ---------- Grid ---------- */
+.gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+/* ---------- Card ---------- */
+.gallery__card {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--gold-soft);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.4s ease;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.gallery__card:focus-visible {
+    box-shadow: 0 0 0 3px var(--gold), 0 0 0 6px rgba(238, 186, 109, 0.35);
+}
+
+.gallery__img-wrap {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+            rgba(238, 186, 109, 0.25),
+            rgba(238, 186, 109, 0.05));
+}
+
+.gallery__card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* ---------- Hover (только там, где есть hover) ---------- */
+@media (hover: hover) {
+    .gallery__card:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--shadow);
+    }
+
+    .gallery__card:hover img {
+        transform: scale(1.08);
+    }
+
+    .gallery__card:hover .gallery__overlay {
+        opacity: 1;
+    }
+
+    .gallery__card:hover .gallery__view {
+        transform: translateY(0);
+    }
+
+    .gallery__card:hover .gallery__quick-add {
+        transform: scale(1) rotate(0);
+    }
+}
+
+/* ---------- Overlay ---------- */
+.gallery__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,
+            rgba(53, 3, 6, 0.85),
+            rgba(53, 3, 6, 0) 60%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 16px;
+    pointer-events: none;
+}
+
+/* Разрешаем клики только по кнопке */
+.gallery__overlay>* {
+    pointer-events: auto;
+}
+
+.gallery__view {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 14px;
+    transform: translateY(10px);
+    transition: transform 0.35s ease;
+    pointer-events: none;
+}
+
+.gallery__quick-add {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--wine);
+    display: grid;
+    place-items: center;
+    font-size: 22px;
+    border: none;
+    cursor: pointer;
+    transform: scale(0) rotate(-90deg);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+        background 0.25s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.gallery__quick-add:active {
+    background: var(--white);
+    transform: scale(0.94);
+}
+
+.gallery__quick-add:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
+}
+
+/* ---------- Touch: overlay всегда виден ---------- */
+@media (hover: none) {
+    .gallery__overlay {
+        opacity: 1;
+        background: linear-gradient(to top,
+                rgba(53, 3, 6, 0.75),
+                rgba(53, 3, 6, 0) 55%);
+    }
+
+    .gallery__view {
+        transform: translateY(0);
+    }
+
+    .gallery__quick-add {
+        transform: scale(1) rotate(0);
+    }
+}
+
+/* ---------- Планшет ---------- */
+@media (max-width: 900px) {
+    .gallery {
+        padding: 60px 0;
+    }
+
+    .gallery__head {
+        margin-bottom: 40px;
+    }
+}
+
+/* ---------- Мобильный ---------- */
+@media (max-width: 640px) {
+    .gallery {
+        padding: 48px 0;
+    }
+
+    .gallery__head {
+        margin-bottom: 28px;
+        padding: 0 4px;
+    }
+
+    .gallery__desc {
+        font-size: 14.5px;
+    }
+
+    .gallery__grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .gallery__overlay {
+        padding: 10px;
+    }
+
+    .gallery__view {
+        font-size: 12.5px;
+        gap: 6px;
+    }
+
+    .gallery__quick-add {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+    }
+}
+
+/* ---------- Узкий мобильный: 2 колонки, компактнее ---------- */
+@media (max-width: 380px) {
+    .gallery__grid {
+        gap: 8px;
+    }
+
+    .gallery__view span {
+        display: none;
+        /* оставляем только иконку глаза */
+    }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+
+    .gallery__card,
+    .gallery__card img,
+    .gallery__overlay,
+    .gallery__view,
+    .gallery__quick-add {
+        transition: none;
+    }
+}
