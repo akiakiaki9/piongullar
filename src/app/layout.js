@@ -3,6 +3,7 @@ import Navbar from "@/components/navbar/Navbar";
 import CartDrawer from "@/components/cart/CartDrawer";
 import CheckoutModal from "@/components/checkout/CheckoutModal";
 import Footer from "@/components/footer/Footer";
+import Script from "next/script";
 import "./globals.css";
 
 const SITE_URL = "https://www.piongullar.uz";
@@ -89,6 +90,22 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ru">
       <body>
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-VSF8EMSPFB"
+          strategy="afterInteractive"
+        />
+
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-VSF8EMSPFB');
+          `}
+        </Script>
+
         <CartProvider>
           <Navbar />
           <CartDrawer />
