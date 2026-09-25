@@ -1,28 +1,71 @@
+/* =========================================================
+   ProductModal — тёмная тема
+   ========================================================= */
+
 .pmodal-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(53, 3, 6, 0.55);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     z-index: 300;
     display: grid;
     place-items: center;
     padding: 20px;
+    overscroll-behavior: contain;
+    animation: pmodal-fade 0.22s ease-out;
 }
 
+@keyframes pmodal-fade {
+    from {
+        opacity: 0;
+        backdrop-filter: blur(0);
+        -webkit-backdrop-filter: blur(0);
+    }
+
+    to {
+        opacity: 1;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+}
+
+/* ---------- Контейнер ---------- */
 .pmodal {
     position: relative;
     width: 100%;
     max-width: 980px;
     max-height: 92vh;
-    background: var(--cream);
+    max-height: 92dvh;
+    background: linear-gradient(160deg,
+            var(--black-3) 0%,
+            var(--black-2) 100%);
+    border: 1px solid var(--border);
     border-radius: 32px;
     overflow: hidden;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    box-shadow: 0 30px 90px rgba(53, 3, 6, 0.35);
+    box-shadow: 0 40px 120px rgba(0, 0, 0, 0.75),
+        0 0 0 1px rgba(255, 77, 141, 0.06);
+    color: var(--text);
 }
 
+/* Мягкое розовое свечение в углу */
+.pmodal::before {
+    content: "";
+    position: absolute;
+    top: -40%;
+    right: -20%;
+    width: 60%;
+    height: 160%;
+    background: radial-gradient(circle,
+            rgba(255, 77, 141, 0.08),
+            transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ---------- Кнопка закрытия ---------- */
 .pmodal__close {
     position: absolute;
     top: 16px;
@@ -30,35 +73,56 @@
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 77, 141, 0.12);
     backdrop-filter: blur(10px);
-    color: var(--wine);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--text);
+    border: 1px solid var(--border);
     font-size: 22px;
     display: grid;
     place-items: center;
     z-index: 5;
-    transition: var(--transition);
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease,
+        transform 0.3s ease, border-color 0.25s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .pmodal__close:hover {
-    background: var(--wine);
-    color: var(--gold);
+    background: var(--pink);
+    color: var(--black);
+    border-color: transparent;
     transform: rotate(90deg);
 }
 
+.pmodal__close:active {
+    transform: rotate(90deg) scale(0.94);
+}
+
+.pmodal__close:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 2px;
+}
+
+/* ---------- Медиа ---------- */
 .pmodal__media {
     position: relative;
-    background: var(--gold-soft);
-    aspect-ratio: 1/1;
+    background: var(--black-2);
+    aspect-ratio: 1 / 1;
     overflow: hidden;
+    z-index: 1;
 }
 
 .pmodal__media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
+/* ---------- Навигация ---------- */
 .pmodal__nav {
     position: absolute;
     top: 50%;
@@ -66,18 +130,34 @@
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.9);
-    color: var(--wine);
+    background: rgba(10, 7, 8, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
     display: grid;
     place-items: center;
     font-size: 22px;
-    transition: var(--transition);
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease,
+        transform 0.25s ease, border-color 0.25s ease;
     z-index: 3;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .pmodal__nav:hover {
-    background: var(--wine);
-    color: var(--gold);
+    background: linear-gradient(135deg, var(--pink), var(--gold));
+    color: var(--black);
+    border-color: transparent;
+}
+
+.pmodal__nav:active {
+    transform: translateY(-50%) scale(0.94);
+}
+
+.pmodal__nav:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
 }
 
 .pmodal__nav--prev {
@@ -88,15 +168,43 @@
     right: 14px;
 }
 
+/* ---------- Информационная колонка ---------- */
 .pmodal__info {
+    position: relative;
+    z-index: 1;
     padding: 44px 40px;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
     display: flex;
     flex-direction: column;
+
+    /* тёмный скроллбар */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 77, 141, 0.35) transparent;
 }
 
+.pmodal__info::-webkit-scrollbar {
+    width: 8px;
+}
+
+.pmodal__info::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.pmodal__info::-webkit-scrollbar-thumb {
+    background: rgba(255, 77, 141, 0.35);
+    border-radius: 100px;
+}
+
+.pmodal__info::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 77, 141, 0.55);
+}
+
+/* ---------- Тексты ---------- */
 .pmodal__eyebrow {
-    color: var(--gold);
+    display: inline-block;
+    color: var(--pink);
     font-weight: 800;
     font-size: 12px;
     letter-spacing: 0.2em;
@@ -106,32 +214,34 @@
 .pmodal__title {
     font-size: 34px;
     font-weight: 800;
-    color: var(--wine);
+    color: var(--text);
     letter-spacing: -0.02em;
-    margin-bottom: 18px;
+    margin: 0 0 18px;
     line-height: 1.1;
 }
 
 .pmodal__desc {
-    color: rgba(53, 3, 6, 0.75);
+    color: var(--text-muted);
     line-height: 1.65;
     font-size: 15px;
-    margin-bottom: 24px;
+    margin: 0 0 24px;
 }
 
+/* ---------- Фичи ---------- */
 .pmodal__features {
     list-style: none;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-bottom: 32px;
+    margin: 0 0 32px;
+    padding: 0;
 }
 
 .pmodal__features li {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--wine);
+    color: var(--text);
     font-size: 14px;
     font-weight: 600;
 }
@@ -139,47 +249,129 @@
 .pmodal__features svg {
     color: var(--gold);
     flex-shrink: 0;
-    background: rgba(238, 186, 109, 0.2);
+    background: rgba(255, 77, 141, 0.14);
+    border: 1px solid rgba(255, 77, 141, 0.25);
     border-radius: 50%;
     padding: 3px;
     width: 22px;
     height: 22px;
 }
 
+/* ---------- Кнопки ---------- */
 .pmodal__actions {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-bottom: 16px;
+    margin: 0 0 16px;
 }
 
 .pmodal__actions .btn-primary,
 .pmodal__actions .btn-outline {
     width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 .pmodal__hint {
     font-size: 13px;
-    color: rgba(53, 3, 6, 0.5);
+    color: var(--text-dim);
     text-align: center;
+    margin: 0;
 }
 
+/* ---------- Планшет ---------- */
 @media (max-width: 800px) {
     .pmodal {
         grid-template-columns: 1fr;
         max-height: 94vh;
+        max-height: 94dvh;
         overflow-y: auto;
+        border-radius: 24px;
     }
 
     .pmodal__media {
-        aspect-ratio: 4/3;
+        aspect-ratio: 4 / 3;
     }
 
     .pmodal__info {
         padding: 32px 24px;
+        overflow: visible;
     }
 
     .pmodal__title {
         font-size: 26px;
+    }
+}
+
+/* ---------- Мобильный ---------- */
+@media (max-width: 480px) {
+    .pmodal-backdrop {
+        padding: 12px;
+    }
+
+    .pmodal {
+        border-radius: 20px;
+        max-height: calc(100dvh - 24px);
+    }
+
+    .pmodal__media {
+        aspect-ratio: 1 / 1;
+    }
+
+    .pmodal__close {
+        top: 12px;
+        right: 12px;
+        width: 38px;
+        height: 38px;
+        font-size: 18px;
+    }
+
+    .pmodal__nav {
+        width: 38px;
+        height: 38px;
+        font-size: 18px;
+    }
+
+    .pmodal__nav--prev {
+        left: 10px;
+    }
+
+    .pmodal__nav--next {
+        right: 10px;
+    }
+
+    .pmodal__info {
+        padding: 24px 20px;
+    }
+
+    .pmodal__title {
+        font-size: 22px;
+        margin-bottom: 14px;
+    }
+
+    .pmodal__desc {
+        font-size: 14px;
+        margin-bottom: 18px;
+    }
+
+    .pmodal__features {
+        margin-bottom: 24px;
+    }
+
+    .pmodal__features li {
+        font-size: 13.5px;
+    }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+
+    .pmodal-backdrop,
+    .pmodal__close,
+    .pmodal__nav {
+        animation: none !important;
+        transition: none !important;
     }
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useCallback, useMemo, useEffect } from "react";
-import { motion } from "framer-motion";
 import { FiPlus, FiEye } from "react-icons/fi";
 import ProductModal from "@/components/product-modal/ProductModal";
 import { useCart } from "@/context/CartContext";
@@ -24,7 +23,7 @@ export default function Gallery() {
         []
     );
 
-    /* ---------- Блокировка скролла, когда открыт ProductModal ---------- */
+    /* ---------- Блокировка скролла при открытой модалке ---------- */
     useEffect(() => {
         if (activeIndex === null) return;
         const scrollY = window.scrollY;
@@ -65,7 +64,7 @@ export default function Gallery() {
         [items.length]
     );
 
-    /* ---------- Клавиатура в модалке ---------- */
+    /* ---------- Клавиатура ---------- */
     useEffect(() => {
         if (activeIndex === null) return;
         const onKey = (e) => {
@@ -94,21 +93,15 @@ export default function Gallery() {
                         Выберите <span>свой букет</span>
                     </h2>
                     <p className="gallery__desc">
-                        Нажмите на фото, чтобы узнать подробнее и добавить в корзину.
+                        Нажмите на фото, чтобы узнать подробнее и добавить в
+                        корзину.
                     </p>
                 </div>
 
                 <div className="gallery__grid">
                     {items.map((item, i) => (
-                        <motion.article
+                        <article
                             key={item.id}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-50px" }}
-                            transition={{
-                                duration: 0.5,
-                                delay: (i % 6) * 0.05,
-                            }}
                             className="gallery__card"
                             onClick={() => setActiveIndex(i)}
                             onKeyDown={(e) => {
@@ -127,6 +120,7 @@ export default function Gallery() {
                                     alt={item.alt}
                                     loading={i < 6 ? "eager" : "lazy"}
                                     decoding="async"
+                                    fetchPriority={i < 6 ? "high" : "auto"}
                                     draggable="false"
                                 />
                             </div>
@@ -145,7 +139,7 @@ export default function Gallery() {
                                     <FiPlus aria-hidden="true" />
                                 </button>
                             </div>
-                        </motion.article>
+                        </article>
                     ))}
                 </div>
             </div>

@@ -8,6 +8,7 @@ import {
   FiPhone,
   FiNavigation,
 } from "react-icons/fi";
+import Quotes from "@/components/quotes/Quotes";
 
 const features = [
   {
@@ -31,6 +32,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Quotes />
       <Gallery />
 
       {/* ---------- О нас ---------- */}

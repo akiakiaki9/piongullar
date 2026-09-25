@@ -1,3 +1,7 @@
+/* =========================================================
+   Navbar — фикс прозрачности, z-index и работы бургера
+   ========================================================= */
+
 .navbar {
     position: fixed;
     top: 0;
@@ -5,15 +9,18 @@
     right: 0;
     z-index: 100;
     padding: 20px 0;
-    transition: padding 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+    transition: padding 0.4s ease, background 0.4s ease,
+        box-shadow 0.4s ease, border-color 0.4s ease;
+    border-bottom: 1px solid transparent;
 }
 
 .navbar--scrolled {
-    background: rgba(253, 248, 242, 0.88);
+    background: rgba(10, 7, 8, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     padding: 12px 0;
-    box-shadow: 0 4px 30px rgba(53, 3, 6, 0.06);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid var(--border);
 }
 
 .navbar__inner {
@@ -23,7 +30,7 @@
     gap: 24px;
 }
 
-/* ---------- Logo ---------- */
+/* ---------- Лого ---------- */
 .navbar__logo {
     font-size: 26px;
     font-weight: 800;
@@ -35,14 +42,14 @@
 }
 
 .navbar__logo-pion {
-    color: var(--wine);
+    color: var(--text);
 }
 
 .navbar__logo-gullar {
-    color: var(--gold);
+    color: var(--pink);
 }
 
-/* ---------- Links ---------- */
+/* ---------- Ссылки ---------- */
 .navbar__links {
     display: flex;
     gap: 36px;
@@ -51,7 +58,7 @@
 .navbar__link {
     font-size: 15px;
     font-weight: 600;
-    color: var(--wine);
+    color: var(--text);
     position: relative;
     transition: color 0.3s;
 }
@@ -68,14 +75,14 @@
 }
 
 .navbar__link:hover {
-    color: var(--gold);
+    color: var(--pink);
 }
 
 .navbar__link:hover::after {
     width: 100%;
 }
 
-/* ---------- Actions ---------- */
+/* ---------- Действия ---------- */
 .navbar__actions {
     display: flex;
     align-items: center;
@@ -91,25 +98,29 @@
     display: grid;
     place-items: center;
     font-size: 18px;
-    transition: background 0.3s, color 0.3s, transform 0.3s;
+    transition: background 0.3s, color 0.3s, transform 0.3s,
+        border-color 0.3s;
     -webkit-tap-highlight-color: transparent;
+    border: 1px solid var(--border);
+    position: relative;
 }
 
 .navbar__icon {
-    background: rgba(53, 3, 6, 0.06);
-    color: var(--wine);
+    background: rgba(255, 77, 141, 0.1);
+    color: var(--text);
 }
 
 .navbar__icon:hover {
-    background: var(--wine);
-    color: var(--gold);
+    background: var(--pink);
+    color: var(--black);
     transform: translateY(-2px);
 }
 
 .navbar__cart {
-    position: relative;
-    background: var(--wine);
-    color: var(--gold);
+    background: linear-gradient(135deg, var(--pink), #c93a70);
+    color: var(--black);
+    border-color: transparent;
+    box-shadow: 0 8px 24px rgba(255, 77, 141, 0.35);
 }
 
 .navbar__cart:hover {
@@ -123,8 +134,8 @@
     min-width: 20px;
     height: 20px;
     padding: 0 6px;
-    background: var(--gold);
-    color: var(--wine);
+    background: var(--gold-bright);
+    color: var(--black);
     font-size: 12px;
     font-weight: 700;
     border-radius: 100px;
@@ -133,29 +144,54 @@
     line-height: 1;
 }
 
+/* ---------- Бургер ---------- */
 .navbar__burger {
     display: none;
-    background: rgba(53, 3, 6, 0.06);
-    color: var(--wine);
+    background: rgba(255, 77, 141, 0.1);
+    color: var(--text);
     font-size: 20px;
-    z-index: 110;
+    z-index: 210;
+    /* выше мобильного меню (200) */
+    cursor: pointer;
 }
 
-/* ---------- Mobile fullscreen menu ---------- */
+.navbar__burger:hover {
+    background: var(--pink);
+    color: var(--black);
+}
+
+.navbar__burger:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 2px;
+}
+
+/* ---------- Мобильное полноэкранное меню ---------- */
 .navbar__mobile {
     position: fixed;
     inset: 0;
-    z-index: 105;
-    background: var(--cream, #fdf8f2);
+    z-index: 200;
+    /* выше navbar (100), ниже бургера (210) */
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 96px 24px 32px;
-    /* фон под меню (можно подложить градиент) */
-    background-image:
-        radial-gradient(1200px 600px at 20% 0%, rgba(212, 175, 55, 0.08), transparent 60%),
-        radial-gradient(900px 500px at 100% 100%, rgba(53, 3, 6, 0.06), transparent 60%);
     overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+
+    /* Непрозрачный фон — ничего не просвечивает */
+    background-color: var(--black);
+
+    /* Декоративные блики поверх фона */
+    background-image:
+        radial-gradient(800px 400px at 20% 0%,
+            rgba(255, 77, 141, 0.14),
+            transparent 60%),
+        radial-gradient(600px 400px at 100% 100%,
+            rgba(232, 197, 132, 0.1),
+            transparent 60%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .navbar__mobile-inner {
@@ -164,6 +200,8 @@
     display: flex;
     flex-direction: column;
     gap: 32px;
+    position: relative;
+    z-index: 1;
 }
 
 .navbar__mobile-list {
@@ -181,14 +219,14 @@
     font-size: 28px;
     font-weight: 800;
     letter-spacing: -0.02em;
-    color: var(--wine);
-    border-bottom: 1px solid rgba(53, 3, 6, 0.08);
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
     transition: color 0.25s, padding-left 0.25s;
 }
 
 .navbar__mobile-link:hover,
 .navbar__mobile-link:active {
-    color: var(--gold);
+    color: var(--pink);
     padding-left: 12px;
 }
 
@@ -210,7 +248,7 @@
     border-radius: 14px;
 }
 
-/* ---------- Breakpoints ---------- */
+/* ---------- Адаптив ---------- */
 @media (max-width: 900px) {
     .navbar__links {
         display: none;
@@ -238,8 +276,25 @@
         font-size: 17px;
     }
 
+    .navbar__mobile {
+        padding: 88px 20px 28px;
+    }
+
     .navbar__mobile-link {
         font-size: 24px;
         padding: 16px 4px;
+    }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+
+    .navbar,
+    .navbar__link,
+    .navbar__icon,
+    .navbar__cart,
+    .navbar__burger,
+    .navbar__mobile-link {
+        transition: none !important;
     }
 }

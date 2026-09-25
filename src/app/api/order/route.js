@@ -13,6 +13,8 @@ export async function POST(req) {
 
         const token = process.env.TELEGRAM_BOT_TOKEN;
         const chatId = process.env.TELEGRAM_CHAT_ID;
+        const siteUrl =
+            process.env.NEXT_PUBLIC_SITE_URL || "https://www.piongullar.uz";
 
         if (!token || !chatId) {
             console.error("TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID missing");
@@ -22,16 +24,27 @@ export async function POST(req) {
             );
         }
 
+        // Экранируем возможные markdown-символы в пользовательских данных,
+        // чтобы админ не увидел сломанное форматирование
+        const esc = (s = "") =>
+            String(s).replace(/([_*\[\]()~`>#+\-=|{}.!])/g, "\\$1");
+
         const itemsList = items
-            .map((i) => `• Букет №${i.id} — ${i.qty} шт.`)
+            .map((i) => {
+                const photoUrl = `${siteUrl}/images/data/${i.id}.png`;
+                return (
+                    `• Букет №${i.id} — ${i.qty} шт.\n` +
+                    `  🔗 [Открыть фото](${photoUrl})`
+                );
+            })
             .join("\n");
 
         const text =
             `🌸 *Новая заявка — Pion Gullar*\n\n` +
-            `👤 *Имя:* ${name}\n` +
-            `📞 *Телефон:* ${phone}\n` +
-            `📍 *Адрес:* ${address || "не указан"}\n` +
-            `💬 *Комментарий:* ${comment || "—"}\n\n` +
+            `👤 *Имя:* ${esc(name)}\n` +
+            `📞 *Телефон:* ${esc(phone)}\n` +
+            `📍 *Адрес:* ${esc(address || "не указан")}\n` +
+            `💬 *Комментарий:* ${esc(comment || "—")}\n\n` +
             `*Состав заказа:*\n${itemsList}\n\n` +
             `_Цена по запросу — уточнить при звонке._`;
 
@@ -44,12 +57,15 @@ export async function POST(req) {
                     chat_id: chatId,
                     text,
                     parse_mode: "Markdown",
+                    disable_web_page_preview: true, // чтобы превью не разворачивалось в огромную картинку
                 }),
             }
         );
 
         const data = await tgRes.json();
-        if (!data.ok) throw new Error(data.description || "Telegram API error");
+        if (!data.ok) {
+            throw new Error(data.description || "Telegram API error");
+        }
 
         return NextResponse.json({ ok: true });
     } catch (err) {

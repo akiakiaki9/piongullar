@@ -13,13 +13,14 @@
     align-items: center;
 }
 
-/* ---------- Badge ---------- */
 .hero__badge {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: rgba(238, 186, 109, 0.15);
-    color: var(--wine);
+    background: var(--pink-soft-bg);
+    color: var(--text);
+    border: 1px solid rgba(255, 77, 141, 0.25);
+    backdrop-filter: blur(8px);
     padding: 10px 18px;
     border-radius: 100px;
     font-size: 13px;
@@ -32,9 +33,9 @@
 .hero__badge-dot {
     width: 8px;
     height: 8px;
-    background: var(--gold);
+    background: var(--pink);
     border-radius: 50%;
-    box-shadow: 0 0 0 4px rgba(238, 186, 109, 0.3);
+    box-shadow: 0 0 0 4px rgba(255, 77, 141, 0.3);
     animation: pulse 2s infinite;
     flex-shrink: 0;
 }
@@ -43,32 +44,25 @@
 
     0%,
     100% {
-        box-shadow: 0 0 0 4px rgba(238, 186, 109, 0.3);
+        box-shadow: 0 0 0 4px rgba(255, 77, 141, 0.3);
     }
 
     50% {
-        box-shadow: 0 0 0 8px rgba(238, 186, 109, 0.15);
+        box-shadow: 0 0 0 8px rgba(255, 77, 141, 0.12);
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .hero__badge-dot {
-        animation: none;
-    }
-}
-
-/* ---------- Title ---------- */
 .hero__title {
     font-size: clamp(34px, 6vw, 72px);
     font-weight: 800;
     line-height: 1.05;
     letter-spacing: -0.03em;
-    color: var(--wine);
+    color: var(--text);
     margin-bottom: 24px;
 }
 
 .hero__title span {
-    color: var(--gold);
+    color: var(--pink);
     position: relative;
     display: inline-block;
 }
@@ -80,21 +74,21 @@
     left: 0;
     width: 100%;
     height: 12px;
-    background: rgba(238, 186, 109, 0.25);
+    background: linear-gradient(90deg,
+            rgba(255, 77, 141, 0.35),
+            rgba(232, 197, 132, 0.25));
     z-index: -1;
     border-radius: 4px;
 }
 
-/* ---------- Subtitle ---------- */
 .hero__subtitle {
     font-size: 17px;
     line-height: 1.6;
-    color: rgba(53, 3, 6, 0.7);
+    color: var(--text-muted);
     max-width: 480px;
     margin-bottom: 36px;
 }
 
-/* ---------- Actions ---------- */
 .hero__actions {
     display: flex;
     gap: 16px;
@@ -110,7 +104,6 @@
     white-space: nowrap;
 }
 
-/* ---------- Features ---------- */
 .hero__features {
     list-style: none;
     margin: 0;
@@ -124,7 +117,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--wine);
+    color: var(--text-muted);
     font-size: 14px;
     font-weight: 600;
 }
@@ -135,7 +128,6 @@
     flex-shrink: 0;
 }
 
-/* ---------- Visual ---------- */
 .hero__visual {
     position: relative;
     width: 100%;
@@ -144,9 +136,10 @@
 .hero__img-wrap {
     border-radius: 200px 200px 32px 32px;
     overflow: hidden;
-    box-shadow: var(--shadow);
+    background: var(--black-3);
+    box-shadow: 0 30px 80px rgba(255, 77, 141, 0.15),
+        0 0 0 1px var(--border);
     aspect-ratio: 4 / 5;
-    background: var(--gold-soft);
 }
 
 .hero__img-wrap img {
@@ -165,11 +158,11 @@
     position: absolute;
     bottom: 40px;
     left: -20px;
-    background: var(--wine);
-    color: var(--gold);
+    background: linear-gradient(135deg, var(--pink), #c93a70);
+    color: var(--black);
     padding: 16px 24px;
     border-radius: 24px;
-    box-shadow: var(--shadow);
+    box-shadow: 0 20px 50px rgba(255, 77, 141, 0.4);
     font-weight: 700;
     font-size: 15px;
     line-height: 1;
@@ -177,7 +170,6 @@
     pointer-events: none;
 }
 
-/* ---------- Tablet ---------- */
 @media (max-width: 1024px) {
     .hero {
         padding: 140px 0 80px;
@@ -192,7 +184,6 @@
     }
 }
 
-/* ---------- Mobile ---------- */
 @media (max-width: 900px) {
     .hero {
         padding: 120px 0 56px;
@@ -201,16 +192,6 @@
     .hero__inner {
         grid-template-columns: 1fr;
         gap: 40px;
-    }
-
-    .hero__content {
-        text-align: left;
-    }
-
-    .hero__badge {
-        font-size: 12px;
-        padding: 9px 14px;
-        margin-bottom: 20px;
     }
 
     .hero__subtitle {
@@ -241,7 +222,6 @@
     }
 }
 
-/* ---------- Small mobile ---------- */
 @media (max-width: 480px) {
     .hero {
         padding: 100px 0 40px;
@@ -262,7 +242,6 @@
         line-height: 1.55;
     }
 
-    /* Кнопки на всю ширину, чтобы удобно тапать */
     .hero__actions {
         flex-direction: column;
         align-items: stretch;
@@ -280,15 +259,10 @@
         gap: 12px;
     }
 
-    .hero__feature {
-        font-size: 13.5px;
-    }
-
     .hero__img-wrap {
         border-radius: 140px 140px 24px 24px;
     }
 
-    /* Плашка «Свежие каждый день» — по центру снизу, чтобы не улетала за край */
     .hero__badge-floating {
         left: 50%;
         transform: translateX(-50%);
@@ -301,9 +275,14 @@
     }
 }
 
-/* На узких экранах отключаем hover-zoom (на тач не нужен и подтормаживает) */
 @media (hover: none) {
     .hero__img-wrap:hover img {
         transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero__badge-dot {
+        animation: none;
     }
 }

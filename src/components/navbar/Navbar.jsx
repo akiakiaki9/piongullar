@@ -28,33 +28,38 @@ export default function Navbar() {
 
     /* ---------- Блокировка скролла при открытом меню ---------- */
     useEffect(() => {
-        if (mobileOpen) {
-            const scrollY = window.scrollY;
-            document.body.style.position = "fixed";
-            document.body.style.top = `-${scrollY}px`;
-            document.body.style.left = "0";
-            document.body.style.right = "0";
-            document.body.style.width = "100%";
-            document.body.style.overflow = "hidden";
-            document.documentElement.style.overflow = "hidden";
+        if (!mobileOpen) return;
 
-            return () => {
-                document.body.style.position = "";
-                document.body.style.top = "";
-                document.body.style.left = "";
-                document.body.style.right = "";
-                document.body.style.width = "";
-                document.body.style.overflow = "";
-                document.documentElement.style.overflow = "";
-                window.scrollTo(0, scrollY);
-            };
-        }
+        const scrollY = window.scrollY;
+        const body = document.body;
+        const html = document.documentElement;
+
+        body.style.position = "fixed";
+        body.style.top = `-${scrollY}px`;
+        body.style.left = "0";
+        body.style.right = "0";
+        body.style.width = "100%";
+        body.style.overflow = "hidden";
+        html.style.overflow = "hidden";
+
+        return () => {
+            body.style.position = "";
+            body.style.top = "";
+            body.style.left = "";
+            body.style.right = "";
+            body.style.width = "";
+            body.style.overflow = "";
+            html.style.overflow = "";
+            window.scrollTo(0, scrollY);
+        };
     }, [mobileOpen]);
 
-    /* ---------- Закрытие по Escape ---------- */
+    /* ---------- Escape ---------- */
     useEffect(() => {
         if (!mobileOpen) return;
-        const onKey = (e) => e.key === "Escape" && setMobileOpen(false);
+        const onKey = (e) => {
+            if (e.key === "Escape") setMobileOpen(false);
+        };
         window.addEventListener("keydown", onKey);
         return () => window.removeEventListener("keydown", onKey);
     }, [mobileOpen]);
@@ -62,11 +67,16 @@ export default function Navbar() {
     /* ---------- Плавный скролл к якорю ---------- */
     const handleAnchor = useCallback((e, href) => {
         e.preventDefault();
+
+        // если меню открыто — закрываем и ждём, пока body вернётся в поток
+        const wasOpen = mobileOpen;
         setMobileOpen(false);
 
-        // Небольшая задержка, чтобы меню успело закрыться и
-        // body вернул нормальный поток
-        setTimeout(() => {
+        const doScroll = () => {
+            if (href === "#top") {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+                return;
+            }
             const el = document.querySelector(href);
             if (!el) return;
             const headerOffset = 72;
@@ -75,8 +85,14 @@ export default function Navbar() {
                 window.pageYOffset -
                 headerOffset;
             window.scrollTo({ top, behavior: "smooth" });
-        }, 260);
-    }, []);
+        };
+
+        if (wasOpen) {
+            setTimeout(doScroll, 260);
+        } else {
+            doScroll();
+        }
+    }, [mobileOpen]);
 
     return (
         <>
@@ -97,7 +113,10 @@ export default function Navbar() {
                         <span className="navbar__logo-gullar">Gullar</span>
                     </a>
 
-                    <nav className="navbar__links" aria-label="Основная навигация">
+                    <nav
+                        className="navbar__links"
+                        aria-label="Основная навигация"
+                    >
                         {links.map((l) => (
                             <a
                                 key={l.href}
@@ -114,11 +133,11 @@ export default function Navbar() {
                         <a
                             href="https://t.me/piongullar_bot"
                             target="_blank"
-                            rel="noreferrer"
+                            rel="noreferrer noopener"
                             className="navbar__icon"
                             aria-label="Telegram бот"
                         >
-                            <FaTelegramPlane />
+                            <FaTelegramPlane aria-hidden="true" />
                         </a>
 
                         <a
@@ -126,16 +145,17 @@ export default function Navbar() {
                             className="navbar__icon navbar__icon--phone"
                             aria-label="Позвонить"
                         >
-                            <FiPhone />
+                            <FiPhone aria-hidden="true" />
                         </a>
 
                         <button
                             type="button"
                             className="navbar__cart"
                             onClick={() => setIsOpen(true)}
-                            aria-label={`Корзина${count ? `, товаров: ${count}` : ""}`}
+                            aria-label={`Корзина${count ? `, товаров: ${count}` : ""
+                                }`}
                         >
-                            <FiShoppingBag />
+                            <FiShoppingBag aria-hidden="true" />
                             <AnimatePresence>
                                 {count > 0 && (
                                     <motion.span
@@ -143,7 +163,11 @@ export default function Navbar() {
                                         initial={{ scale: 0 }}
                                         animate={{ scale: 1 }}
                                         exit={{ scale: 0 }}
-                                        transition={{ type: "spring", stiffness: 500, damping: 25 }}
+                                        transition={{
+                                            type: "spring",
+                                            stiffness: 500,
+                                            damping: 25,
+                                        }}
                                         className="navbar__cart-badge"
                                     >
                                         {count}
@@ -156,11 +180,17 @@ export default function Navbar() {
                             type="button"
                             className="navbar__burger"
                             onClick={() => setMobileOpen((v) => !v)}
-                            aria-label={mobileOpen ? "Закрыть меню" : "Открыть меню"}
+                            aria-label={
+                                mobileOpen ? "Закрыть меню" : "Открыть меню"
+                            }
                             aria-expanded={mobileOpen}
                             aria-controls="mobile-menu"
                         >
-                            {mobileOpen ? <FiX /> : <FiMenu />}
+                            {mobileOpen ? (
+                                <FiX aria-hidden="true" />
+                            ) : (
+                                <FiMenu aria-hidden="true" />
+                            )}
                         </button>
                     </div>
                 </div>
@@ -175,58 +205,46 @@ export default function Navbar() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 0.25 }}
+                        transition={{ duration: 0.2 }}
                         role="dialog"
                         aria-modal="true"
+                        aria-label="Мобильное меню"
                     >
-                        <motion.nav
-                            className="navbar__mobile-inner"
-                            initial={{ y: 30, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            exit={{ y: 30, opacity: 0 }}
-                            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                        >
+                        <nav className="navbar__mobile-inner">
                             <ul className="navbar__mobile-list">
-                                {links.map((l, i) => (
-                                    <motion.li
-                                        key={l.href}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 0.08 * i + 0.1 }}
-                                    >
+                                {links.map((l) => (
+                                    <li key={l.href}>
                                         <a
                                             href={l.href}
-                                            onClick={(e) => handleAnchor(e, l.href)}
+                                            onClick={(e) =>
+                                                handleAnchor(e, l.href)
+                                            }
                                             className="navbar__mobile-link"
                                         >
                                             {l.label}
                                         </a>
-                                    </motion.li>
+                                    </li>
                                 ))}
                             </ul>
 
-                            <motion.div
-                                className="navbar__mobile-actions"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.35 }}
-                            >
+                            <div className="navbar__mobile-actions">
                                 <a
                                     href="tel:+998914088685"
                                     className="btn-primary navbar__mobile-cta"
                                 >
-                                    <FiPhone /> Позвонить
+                                    <FiPhone aria-hidden="true" /> Позвонить
                                 </a>
                                 <a
                                     href="https://t.me/piongullar_bot"
                                     target="_blank"
-                                    rel="noreferrer"
-                                    className="btn-secondary navbar__mobile-cta"
+                                    rel="noreferrer noopener"
+                                    className="btn-outline navbar__mobile-cta"
                                 >
-                                    <FaTelegramPlane /> Telegram
+                                    <FaTelegramPlane aria-hidden="true" />{" "}
+                                    Telegram
                                 </a>
-                            </motion.div>
-                        </motion.nav>
+                            </div>
+                        </nav>
                     </motion.div>
                 )}
             </AnimatePresence>

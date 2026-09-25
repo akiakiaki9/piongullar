@@ -83,7 +83,7 @@ export default function Hero() {
                         <img
                             src="/images/data/1.png"
                             alt="Пионы Pion Gullar"
-                            loading="eager"
+                            loading="lazy"
                             decoding="async"
                         />
                     </div>
