@@ -1,24 +1,12 @@
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.piongullar.uz";
 const PHONE = process.env.BOT_PHONE || "+998914088685";
-const ADDRESS =
-    process.env.BOT_ADDRESS || "Улица Хафиза Таниша Бухари, 44, Бухара";
+const ADDRESS = process.env.BOT_ADDRESS || "Улица Хафиза Таниша Бухари, 44, Бухара";
 const LAT = Number(process.env.BOT_LAT || 39.765815);
 const LON = Number(process.env.BOT_LON || 64.442607);
-const MANAGER_USERNAME = (process.env.TELEGRAM_MANAGER_USERNAME || "").replace(
-    /^@/,
-    ""
-);
+const MANAGER_USERNAME = (process.env.TELEGRAM_MANAGER_USERNAME || "").replace(/^@/, "");
 
-export const CONFIG = {
-    SITE_URL,
-    PHONE,
-    ADDRESS,
-    LAT,
-    LON,
-    MANAGER_USERNAME,
-};
+export const CONFIG = { SITE_URL, PHONE, ADDRESS, LAT, LON, MANAGER_USERNAME };
 
-/* ---------- Клавиатуры ---------- */
 export const MAIN_KEYBOARD = {
     inline_keyboard: [
         [
@@ -41,7 +29,6 @@ export const BACK_KEYBOARD = {
     inline_keyboard: [[{ text: "⬅️ В меню", callback_data: "menu" }]],
 };
 
-/* ---------- Тексты ---------- */
 export const TEXTS = {
     welcome: `Здравствуйте! 🌸
 
@@ -56,7 +43,7 @@ export const TEXTS = {
 Выберите, что вам нужно 👇`,
 
     help: `Я подскажу по каталогу, ценам, доставке, адресу и контактам.
-Просто выберите пункт меню 👇 или напишите: *каталог*, *контакты*, *карта*, *доставка*, *часы*.`,
+Напишите: *каталог*, *контакты*, *карта*, *доставка*, *часы* — или выберите пункт меню 👇`,
 
     contacts: `📞 *Контакты Pion Gullar*
 
@@ -73,10 +60,6 @@ Instagram: https://www.instagram.com/pion.gullar.bukhara/
 Пн–Вс: *9:00–22:00*
 По звонку — *24/7*: ${PHONE}`,
 
-    address: `📍 *Наш адрес*
-
-${ADDRESS}`,
-
     map: `🗺 *Мы на карте*
 
 ${ADDRESS}
@@ -91,41 +74,31 @@ https://yandex.com/maps/?pt=${LON},${LAT}&z=17&l=map`,
 
 Доставляем по всей Бухаре.
 • В пределах города — от 1 до 2 часов.
-• Самовывоз с магазина: ${ADDRESS}.
-• Стоимость и точное время — уточнит менеджер.
-
-Хотите, соединю с менеджером?`,
+• Самовывоз: ${ADDRESS}.
+• Стоимость и точное время уточнит менеджер.`,
 
     prices: `💰 *Цены*
 
 У нас большой выбор букетов — от компактных до премиальных.
-Актуальные цены и фото — в каталоге на сайте:
-${SITE_URL}/#gallery
-
-Напишите менеджеру, если нужно подобрать под бюджет.`,
+Актуальные цены и фото — на сайте:
+${SITE_URL}/#gallery`,
 
     catalog: `🌸 *Каталог букетов*
 
 Свежие пионы, авторские букеты и композиции — всё с фото на сайте:
-${SITE_URL}/#gallery
-
-Если хотите — менеджер подберёт вариант под ваш повод и бюджет.`,
+${SITE_URL}/#gallery`,
 
     order: `🛒 *Как заказать*
 
 1. Выберите букет: ${SITE_URL}/#gallery
-2. Нажмите «Оформить заказ» на сайте или напишите менеджеру.
-3. Мы перезвоним, уточним состав, время и адрес доставки.`,
+2. Оформите заказ на сайте или напишите менеджеру.
+3. Мы перезвоним и уточним детали.`,
 
     manager: MANAGER_USERNAME
-        ? `👩‍💼 Передаю вас менеджеру.
-
-Напишите @${MANAGER_USERNAME} — ответим в течение пары минут в рабочее время (9:00–22:00).
+        ? `👩‍💼 Напишите @${MANAGER_USERNAME} — ответим в течение пары минут (9:00–22:00).
 
 Если срочно — позвоните: ${PHONE}`
-        : `Менеджер сейчас недоступен в Telegram.
-
-Позвоните, пожалуйста: ${PHONE} — мы на связи 24/7.`,
+        : `Позвоните, пожалуйста: ${PHONE} — мы на связи 24/7.`,
 
     fallback: `Я пока не понял запрос 🤔
 
