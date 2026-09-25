@@ -1,4 +1,5 @@
 import Hero from "@/components/hero/Hero";
+import Quotes from "@/components/quotes/Quotes";
 import Gallery from "@/components/gallery/Gallery";
 import {
   FiClock,
@@ -8,12 +9,11 @@ import {
   FiPhone,
   FiNavigation,
 } from "react-icons/fi";
-import Quotes from "@/components/quotes/Quotes";
 
 const features = [
   {
     Icon: FiClock,
-    title: "9:00–22:00",
+    title: "8:00–23:00",
     text: "Ежедневно. По звонку — 24/7",
   },
   {
@@ -38,13 +38,22 @@ export default function Home() {
       {/* ---------- О нас ---------- */}
       <section id="about" className="about">
         <div className="container">
+          <div className="about__head">
+            <span className="about__eyebrow">О НАС</span>
+            <h2 className="about__title">
+              Немного <em>о нас</em>
+            </h2>
+          </div>
+
           <div className="about__panel">
             {features.map(({ Icon, title, text }, i) => (
               <div className="about__item" key={i}>
-                <Icon
-                  className="about__icon"
-                  aria-hidden="true"
-                />
+                <span className="about__icon-wrap">
+                  <Icon
+                    className="about__icon"
+                    aria-hidden="true"
+                  />
+                </span>
                 <h3 className="about__value">{title}</h3>
                 <p className="about__text">{text}</p>
               </div>
@@ -53,19 +62,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------- Карта и адрес ---------- */}
+      {/* ---------- Карта, фото магазина и адрес ---------- */}
       <section id="map" className="map-section">
         <div className="container">
-          <div className="map-section__panel">
-            <div className="map-section__info">
-              <span className="map-section__eyebrow">
-                КАК НАС НАЙТИ
-              </span>
-              <h2 className="map-section__title">
-                Мы находимся{" "}
-                <span>в центре Бухары</span>
-              </h2>
+          <div className="map-section__head">
+            <span className="map-section__eyebrow">
+              КАК НАС НАЙТИ
+            </span>
+            <h2 className="map-section__title">
+              Мы находимся <em>в центре Бухары</em>
+            </h2>
+          </div>
 
+          <div className="map-section__panel">
+            {/* ---------- Инфо ---------- */}
+            <div className="map-section__info">
               <address className="map-section__address">
                 <div className="map-section__row">
                   <FiMapPin
@@ -85,7 +96,7 @@ export default function Home() {
                     aria-hidden="true"
                   />
                   <span>
-                    Ежедневно 9:00–22:00 · по звонку 24/7
+                    Ежедневно 8:00–23:00 · по звонку 24/7
                   </span>
                 </div>
 
@@ -122,6 +133,18 @@ export default function Home() {
               </div>
             </div>
 
+            {/* ---------- Фото магазина ---------- */}
+            <div className="map-section__photo">
+              <img
+                src="/images/shop.png"
+                alt="Магазин Pion Gullar в Бухаре"
+                loading="lazy"
+                decoding="async"
+                draggable="false"
+              />
+            </div>
+
+            {/* ---------- Карта ---------- */}
             <div className="map-section__frame">
               <iframe
                 title="Pion Gullar на карте — улица Хафиза Таниша Бухари, 44"

@@ -1,40 +1,56 @@
+/* =========================================================
+   Gallery — нежный премиум-стиль
+   ========================================================= */
+
 .gallery {
     position: relative;
-    padding: 80px 0;
+    padding: 100px 0;
 }
 
+/* ---------- Заголовок секции ---------- */
 .gallery__head {
     text-align: center;
-    max-width: 620px;
+    max-width: 640px;
     margin: 0 auto 56px;
 }
 
 .gallery__eyebrow {
     display: inline-block;
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
     color: var(--pink);
-    font-weight: 800;
-    font-size: 13px;
-    letter-spacing: 0.2em;
+    margin-bottom: 16px;
+    opacity: 0.9;
 }
 
 .gallery__title {
-    font-size: clamp(28px, 5vw, 56px);
-    font-weight: 800;
-    letter-spacing: -0.03em;
+    font-family: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+    font-size: clamp(30px, 4.8vw, 58px);
+    font-weight: 500;
+    letter-spacing: -0.015em;
     line-height: 1.08;
     color: var(--text);
-    margin: 12px 0 16px;
+    margin: 0 0 18px;
+    text-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
 }
 
-.gallery__title span {
+.gallery__title em {
+    font-style: italic;
+    font-weight: 500;
     color: var(--gold);
+    padding-right: 2px;
 }
 
 .gallery__desc {
-    font-size: 16px;
-    line-height: 1.55;
-    color: var(--text-muted);
-    margin: 0;
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(246, 239, 242, 0.65);
+    margin: 0 auto;
+    max-width: 480px;
 }
 
 /* =========================
@@ -54,18 +70,13 @@
 .gallery__card {
     position: relative;
     aspect-ratio: 1 / 1;
-    border-radius: var(--radius);
+    border-radius: 22px;
     overflow: hidden;
     cursor: pointer;
     background: var(--black-3);
-    border: 1px solid var(--border);
+    border: 1px solid rgba(232, 197, 132, 0.14);
     outline: none;
 
-    /*
-     * Изолируем отрисовку карточки.
-     * Это помогает браузеру не перерисовывать
-     * соседние элементы при hover.
-     */
     contain: layout paint;
 
     transition:
@@ -90,9 +101,8 @@
     position: absolute;
     inset: 0;
     background: linear-gradient(135deg,
-            rgba(255, 77, 141, 0.1),
-            rgba(232, 197, 132, 0.06));
-
+            rgba(255, 77, 141, 0.08),
+            rgba(232, 197, 132, 0.05));
     overflow: hidden;
 }
 
@@ -101,18 +111,11 @@
     height: 100%;
     object-fit: cover;
     display: block;
-
     user-select: none;
     -webkit-user-drag: none;
-
-    /*
-     * Только GPU-friendly transform.
-     */
     transform: translateZ(0);
     backface-visibility: hidden;
-
-    transition:
-        transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* =========================
@@ -122,26 +125,16 @@
 .gallery__overlay {
     position: absolute;
     inset: 0;
-
     background: linear-gradient(to top,
-            rgba(10, 7, 8, 0.9),
-            rgba(10, 7, 8, 0) 60%);
-
+            rgba(10, 7, 8, 0.92),
+            rgba(10, 7, 8, 0) 55%);
     opacity: 0;
-
-    transition: opacity 0.25s ease;
-
+    transition: opacity 0.28s ease;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-
     padding: 16px;
-
     pointer-events: none;
-
-    /*
-     * Отдельный слой для overlay.
-     */
     transform: translateZ(0);
     backface-visibility: hidden;
 }
@@ -158,16 +151,13 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-
+    font-family: "Inter", system-ui, sans-serif;
     color: var(--pink-soft);
-    font-weight: 700;
-    font-size: 14px;
-
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.02em;
     transform: translateY(8px);
-
-    transition:
-        transform 0.25s ease;
-
+    transition: transform 0.28s ease;
     pointer-events: none;
 }
 
@@ -176,34 +166,24 @@
 ========================= */
 
 .gallery__quick-add {
-    width: 44px;
-    height: 44px;
-
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-
-    background: linear-gradient(135deg,
-            var(--pink),
-            var(--gold));
-
-    color: var(--black);
-
+    background: linear-gradient(135deg, #ff5c9a 0%, #ff85b5 100%);
+    color: #2a0d0f;
     display: grid;
     place-items: center;
-
-    font-size: 22px;
-
+    font-size: 20px;
     border: none;
     cursor: pointer;
-
     transform: scale(0.7) rotate(-45deg);
-
     opacity: 0;
-
+    box-shadow: 0 10px 24px rgba(255, 92, 154, 0.4);
     transition:
-        transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
-        opacity 0.2s ease,
-        background 0.2s ease;
-
+        transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.22s ease,
+        background 0.2s ease,
+        box-shadow 0.25s ease;
     -webkit-tap-highlight-color: transparent;
 }
 
@@ -223,16 +203,8 @@
 @media (hover: hover) {
     .gallery__card:hover {
         transform: translateY(-4px);
-
-        /*
-         * Было 24px 60px.
-         * Более лёгкая тень заметно дешевле
-         * при большом количестве карточек.
-         */
-        box-shadow:
-            0 12px 30px rgba(0, 0, 0, 0.35);
-
-        border-color: var(--border-strong);
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+        border-color: rgba(232, 197, 132, 0.28);
     }
 
     .gallery__card:hover img {
@@ -251,6 +223,11 @@
         transform: scale(1) rotate(0);
         opacity: 1;
     }
+
+    .gallery__quick-add:hover {
+        background: linear-gradient(135deg, #ff85b5 0%, #ffa8c9 100%);
+        box-shadow: 0 14px 32px rgba(255, 92, 154, 0.55);
+    }
 }
 
 /* =========================
@@ -260,7 +237,6 @@
 @media (hover: none) {
     .gallery__overlay {
         opacity: 1;
-
         background: linear-gradient(to top,
                 rgba(10, 7, 8, 0.85),
                 rgba(10, 7, 8, 0) 55%);
@@ -282,7 +258,7 @@
 
 @media (max-width: 900px) {
     .gallery {
-        padding: 60px 0;
+        padding: 72px 0;
     }
 
     .gallery__head {
@@ -300,7 +276,7 @@
 
 @media (max-width: 640px) {
     .gallery {
-        padding: 48px 0;
+        padding: 52px 0;
     }
 
     .gallery__head {
@@ -308,8 +284,19 @@
         padding: 0 4px;
     }
 
+    .gallery__eyebrow {
+        font-size: 10px;
+        letter-spacing: 0.28em;
+        margin-bottom: 12px;
+    }
+
+    .gallery__title {
+        font-size: clamp(26px, 8vw, 36px);
+        margin-bottom: 14px;
+    }
+
     .gallery__desc {
-        font-size: 14.5px;
+        font-size: 14px;
     }
 
     .gallery__grid {
@@ -317,19 +304,23 @@
         gap: 12px;
     }
 
+    .gallery__card {
+        border-radius: 18px;
+    }
+
     .gallery__overlay {
         padding: 10px;
     }
 
     .gallery__view {
-        font-size: 12.5px;
+        font-size: 12px;
         gap: 6px;
     }
 
     .gallery__quick-add {
         width: 36px;
         height: 36px;
-        font-size: 18px;
+        font-size: 17px;
     }
 }
 

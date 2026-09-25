@@ -1,5 +1,5 @@
 /* =========================================================
-   Navbar — фикс прозрачности, z-index и работы бургера
+   Navbar — нежный премиум-стиль
    ========================================================= */
 
 .navbar {
@@ -8,19 +8,19 @@
     left: 0;
     right: 0;
     z-index: 100;
-    padding: 20px 0;
+    padding: 22px 0;
     transition: padding 0.4s ease, background 0.4s ease,
         box-shadow 0.4s ease, border-color 0.4s ease;
     border-bottom: 1px solid transparent;
 }
 
 .navbar--scrolled {
-    background: rgba(10, 7, 8, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    padding: 12px 0;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
-    border-bottom: 1px solid var(--border);
+    background: rgba(10, 7, 8, 0.72);
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+    padding: 14px 0;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.35);
+    border-bottom: 1px solid rgba(232, 197, 132, 0.12);
 }
 
 .navbar__inner {
@@ -30,37 +30,82 @@
     gap: 24px;
 }
 
-/* ---------- Лого ---------- */
+/* ---------- Логотип ---------- */
 .navbar__logo {
-    font-size: 26px;
-    font-weight: 800;
-    letter-spacing: -0.03em;
     display: flex;
-    gap: 4px;
+    align-items: center;
+    gap: 12px;
     cursor: pointer;
     line-height: 1;
+    text-decoration: none;
+    min-width: 0;
+}
+
+.navbar__logo-mark {
+    height: 56px;
+    width: auto;
+    display: block;
+    flex-shrink: 0;
+    filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.5));
+    transition: height 0.4s ease;
+}
+
+/* Текст логотипа — появляется только после 100vh */
+.navbar__logo-text {
+    display: inline-flex;
+    gap: 6px;
+    font-family: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    white-space: nowrap;
+    text-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+
+    opacity: 0;
+    max-width: 0;
+    overflow: hidden;
+    transform: translateX(-8px);
+    transition: opacity 0.4s ease, max-width 0.5s ease,
+        transform 0.4s ease;
+}
+
+.navbar--past-hero .navbar__logo-text {
+    opacity: 1;
+    max-width: 220px;
+    transform: translateX(0);
 }
 
 .navbar__logo-pion {
     color: var(--text);
+    font-weight: 600;
 }
 
 .navbar__logo-gullar {
     color: var(--pink);
+    font-style: italic;
+    font-weight: 500;
+}
+
+/* Чуть уменьшаем лого при скролле */
+.navbar--scrolled .navbar__logo-mark {
+    height: 46px;
 }
 
 /* ---------- Ссылки ---------- */
 .navbar__links {
     display: flex;
-    gap: 36px;
+    gap: 38px;
 }
 
 .navbar__link {
-    font-size: 15px;
-    font-weight: 600;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
     color: var(--text);
     position: relative;
-    transition: color 0.3s;
+    transition: color 0.3s ease;
 }
 
 .navbar__link::after {
@@ -69,8 +114,8 @@
     bottom: -6px;
     left: 0;
     width: 0;
-    height: 2px;
-    background: var(--gold);
+    height: 1px;
+    background: linear-gradient(90deg, var(--pink), var(--gold));
     transition: width 0.35s ease;
 }
 
@@ -92,72 +137,73 @@
 .navbar__icon,
 .navbar__cart,
 .navbar__burger {
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     display: grid;
     place-items: center;
     font-size: 18px;
-    transition: background 0.3s, color 0.3s, transform 0.3s,
-        border-color 0.3s;
+    transition: background 0.3s ease, color 0.3s ease,
+        transform 0.3s ease, border-color 0.3s ease,
+        box-shadow 0.3s ease;
     -webkit-tap-highlight-color: transparent;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(232, 197, 132, 0.22);
     position: relative;
-}
-
-.navbar__icon {
-    background: rgba(255, 77, 141, 0.1);
+    background: rgba(255, 255, 255, 0.04);
     color: var(--text);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .navbar__icon:hover {
-    background: var(--pink);
-    color: var(--black);
+    background: rgba(255, 77, 141, 0.15);
+    border-color: rgba(255, 77, 141, 0.45);
+    color: var(--pink);
     transform: translateY(-2px);
 }
 
 .navbar__cart {
-    background: linear-gradient(135deg, var(--pink), #c93a70);
-    color: var(--black);
+    background: linear-gradient(135deg, #ff5c9a 0%, #ff85b5 100%);
+    color: #2a0d0f;
     border-color: transparent;
-    box-shadow: 0 8px 24px rgba(255, 77, 141, 0.35);
+    box-shadow: 0 10px 28px rgba(255, 92, 154, 0.4);
 }
 
 .navbar__cart:hover {
     transform: scale(1.06);
+    box-shadow: 0 14px 34px rgba(255, 92, 154, 0.55);
 }
 
 .navbar__cart-badge {
     position: absolute;
-    top: -4px;
-    right: -4px;
+    top: -5px;
+    right: -5px;
     min-width: 20px;
     height: 20px;
     padding: 0 6px;
     background: var(--gold-bright);
     color: var(--black);
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 700;
     border-radius: 100px;
     display: grid;
     place-items: center;
     line-height: 1;
+    box-shadow: 0 0 0 2px var(--black);
 }
 
 /* ---------- Бургер ---------- */
 .navbar__burger {
     display: none;
-    background: rgba(255, 77, 141, 0.1);
-    color: var(--text);
     font-size: 20px;
     z-index: 210;
-    /* выше мобильного меню (200) */
     cursor: pointer;
 }
 
 .navbar__burger:hover {
-    background: var(--pink);
-    color: var(--black);
+    background: rgba(255, 77, 141, 0.15);
+    border-color: rgba(255, 77, 141, 0.45);
+    color: var(--pink);
 }
 
 .navbar__burger:focus-visible {
@@ -165,12 +211,11 @@
     outline-offset: 2px;
 }
 
-/* ---------- Мобильное полноэкранное меню ---------- */
+/* ---------- Мобильное меню ---------- */
 .navbar__mobile {
     position: fixed;
     inset: 0;
     z-index: 200;
-    /* выше navbar (100), ниже бургера (210) */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -179,10 +224,7 @@
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
 
-    /* Непрозрачный фон — ничего не просвечивает */
     background-color: var(--black);
-
-    /* Декоративные блики поверх фона */
     background-image:
         radial-gradient(800px 400px at 20% 0%,
             rgba(255, 77, 141, 0.14),
@@ -216,12 +258,13 @@
 .navbar__mobile-link {
     display: block;
     padding: 18px 4px;
-    font-size: 28px;
-    font-weight: 800;
-    letter-spacing: -0.02em;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 34px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
     color: var(--text);
-    border-bottom: 1px solid var(--border);
-    transition: color 0.25s, padding-left 0.25s;
+    border-bottom: 1px solid rgba(232, 197, 132, 0.14);
+    transition: color 0.25s ease, padding-left 0.25s ease;
 }
 
 .navbar__mobile-link:hover,
@@ -244,12 +287,36 @@
     gap: 10px;
     padding: 16px 20px;
     font-size: 16px;
-    font-weight: 700;
-    border-radius: 14px;
+    font-weight: 600;
+    border-radius: 100px;
 }
 
 /* ---------- Адаптив ---------- */
 @media (max-width: 900px) {
+    .navbar {
+        padding: 16px 0;
+    }
+
+    .navbar--scrolled {
+        padding: 12px 0;
+    }
+
+    .navbar__logo-mark {
+        height: 48px;
+    }
+
+    .navbar--scrolled .navbar__logo-mark {
+        height: 40px;
+    }
+
+    .navbar__logo-text {
+        font-size: 26px;
+    }
+
+    .navbar--past-hero .navbar__logo-text {
+        max-width: 180px;
+    }
+
     .navbar__links {
         display: none;
     }
@@ -258,22 +325,51 @@
         display: grid;
     }
 
-    .navbar__icon--phone {
+    .navbar__icon--phone,
+    .navbar__icon--tg {
         display: none;
-    }
-}
-
-@media (max-width: 420px) {
-    .navbar__logo {
-        font-size: 22px;
     }
 
     .navbar__icon,
     .navbar__cart,
     .navbar__burger {
-        width: 38px;
-        height: 38px;
+        width: 42px;
+        height: 42px;
         font-size: 17px;
+    }
+
+    .navbar__cart-badge {
+        top: -4px;
+        right: -4px;
+        min-width: 18px;
+        height: 18px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 420px) {
+    .navbar__logo-mark {
+        height: 42px;
+    }
+
+    .navbar--scrolled .navbar__logo-mark {
+        height: 36px;
+    }
+
+    .navbar__logo-text {
+        font-size: 22px;
+    }
+
+    .navbar--past-hero .navbar__logo-text {
+        max-width: 160px;
+    }
+
+    .navbar__icon,
+    .navbar__cart,
+    .navbar__burger {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
     }
 
     .navbar__mobile {
@@ -281,7 +377,7 @@
     }
 
     .navbar__mobile-link {
-        font-size: 24px;
+        font-size: 28px;
         padding: 16px 4px;
     }
 }
@@ -294,7 +390,9 @@
     .navbar__icon,
     .navbar__cart,
     .navbar__burger,
-    .navbar__mobile-link {
+    .navbar__mobile-link,
+    .navbar__logo-text,
+    .navbar__logo-mark {
         transition: none !important;
     }
 }

@@ -1,9 +1,13 @@
+/* =========================================================
+   CartDrawer — нежный премиум-стиль
+   ========================================================= */
+
 .cart-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.65);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.68);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     z-index: 200;
 }
 
@@ -15,13 +19,17 @@
     max-width: 440px;
     height: 100vh;
     height: 100dvh;
-    background: var(--black-2);
+    background: linear-gradient(180deg,
+            var(--black-2) 0%,
+            var(--black) 100%);
     color: var(--text);
     z-index: 201;
     display: flex;
     flex-direction: column;
-    border-left: 1px solid var(--border);
-    box-shadow: -30px 0 80px rgba(0, 0, 0, 0.6);
+    border-left: 1px solid rgba(232, 197, 132, 0.14);
+    box-shadow:
+        -30px 0 80px rgba(0, 0, 0, 0.6),
+        -1px 0 0 rgba(255, 77, 141, 0.08);
     overscroll-behavior: contain;
 }
 
@@ -31,35 +39,41 @@
     }
 }
 
+/* ---------- Заголовок ---------- */
 .cart__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    padding: 20px 24px;
-    border-bottom: 1px solid var(--border);
+    padding: 22px 24px;
+    border-bottom: 1px solid rgba(232, 197, 132, 0.12);
     flex-shrink: 0;
 }
 
 .cart__header-title {
     display: flex;
     align-items: baseline;
-    gap: 10px;
+    gap: 12px;
     min-width: 0;
 }
 
 .cart__header h2 {
-    font-size: 22px;
-    font-weight: 800;
+    font-family: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+    font-size: 28px;
+    font-weight: 600;
     color: var(--text);
     margin: 0;
+    line-height: 1;
+    letter-spacing: -0.015em;
     white-space: nowrap;
 }
 
 .cart__header-count {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-muted);
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: rgba(246, 239, 242, 0.55);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -72,19 +86,20 @@
     border-radius: 50%;
     background: rgba(255, 77, 141, 0.1);
     color: var(--text);
-    border: 1px solid var(--border);
+    border: 1px solid rgba(232, 197, 132, 0.2);
     display: grid;
     place-items: center;
     font-size: 20px;
     cursor: pointer;
     transition: background 0.25s ease, color 0.25s ease,
-        transform 0.2s ease;
+        transform 0.2s ease, border-color 0.25s ease;
     -webkit-tap-highlight-color: transparent;
 }
 
 .cart__close:hover {
-    background: var(--pink);
-    color: var(--black);
+    background: rgba(255, 77, 141, 0.2);
+    border-color: rgba(255, 77, 141, 0.45);
+    color: var(--pink);
 }
 
 .cart__close:active {
@@ -96,36 +111,53 @@
     outline-offset: 2px;
 }
 
+/* ---------- Пусто ---------- */
 .cart__empty {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 16px;
+    gap: 12px;
     padding: 40px 28px;
     text-align: center;
 }
 
-.cart__empty span {
-    font-size: 64px;
+.cart__empty-icon {
+    font-size: 56px;
     line-height: 1;
+    margin-bottom: 4px;
+    opacity: 0.9;
 }
 
-.cart__empty p {
-    color: var(--text-muted);
+.cart__empty-text {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 24px;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--text);
+    margin: 0;
+}
+
+.cart__empty-hint {
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 13.5px;
+    color: rgba(246, 239, 242, 0.5);
     margin: 0 0 12px;
-    font-weight: 600;
+    line-height: 1.5;
 }
 
 .cart__empty-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 14px 22px;
-    border-radius: 14px;
+    padding: 15px 26px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 600;
 }
 
+/* ---------- Список ---------- */
 .cart__items {
     flex: 1;
     overflow-y: auto;
@@ -137,17 +169,44 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 77, 141, 0.35) transparent;
 }
 
+.cart__items::-webkit-scrollbar {
+    width: 8px;
+}
+
+.cart__items::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.cart__items::-webkit-scrollbar-thumb {
+    background: rgba(255, 77, 141, 0.35);
+    border-radius: 100px;
+}
+
+.cart__items::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 77, 141, 0.55);
+}
+
+/* ---------- Карточка товара ---------- */
 .cart__item {
     display: grid;
     grid-template-columns: 72px minmax(0, 1fr) auto;
     gap: 14px;
     align-items: center;
-    background: var(--black-3);
-    border: 1px solid var(--border);
+    background: linear-gradient(160deg,
+            var(--black-3) 0%,
+            var(--black-2) 100%);
+    border: 1px solid rgba(232, 197, 132, 0.14);
     padding: 12px;
-    border-radius: 18px;
+    border-radius: 20px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cart__item:hover {
+    border-color: rgba(232, 197, 132, 0.26);
 }
 
 .cart__item img {
@@ -168,21 +227,27 @@
 }
 
 .cart__item-info h4 {
-    font-size: 15px;
-    font-weight: 700;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 17px;
+    font-weight: 600;
     color: var(--text);
     margin: 0;
+    line-height: 1.15;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .cart__item-note {
-    font-size: 12px;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-size: 13px;
     color: var(--gold);
-    font-weight: 700;
+    font-weight: 500;
+    letter-spacing: 0.01em;
 }
 
+/* ---------- Количество ---------- */
 .cart__qty {
     display: flex;
     align-items: center;
@@ -193,22 +258,23 @@
 .cart__qty button {
     width: 30px;
     height: 30px;
-    border-radius: 9px;
-    background: rgba(255, 77, 141, 0.1);
+    border-radius: 10px;
+    background: rgba(232, 197, 132, 0.08);
     color: var(--text);
-    border: 1px solid var(--border);
+    border: 1px solid rgba(232, 197, 132, 0.2);
     display: grid;
     place-items: center;
     font-size: 14px;
     cursor: pointer;
     transition: background 0.2s ease, transform 0.15s ease,
-        color 0.2s ease;
+        color 0.2s ease, border-color 0.2s ease;
     -webkit-tap-highlight-color: transparent;
 }
 
 .cart__qty button:hover {
-    background: var(--gold);
-    color: var(--black);
+    background: rgba(232, 197, 132, 0.2);
+    border-color: var(--gold);
+    color: var(--gold);
 }
 
 .cart__qty button:active {
@@ -221,7 +287,8 @@
 }
 
 .cart__qty span {
-    font-weight: 700;
+    font-family: "Inter", system-ui, sans-serif;
+    font-weight: 600;
     font-size: 14px;
     min-width: 22px;
     text-align: center;
@@ -229,24 +296,26 @@
     color: var(--text);
 }
 
+/* ---------- Удалить ---------- */
 .cart__remove {
     width: 36px;
     height: 36px;
     border-radius: 50%;
     background: rgba(255, 77, 141, 0.1);
-    color: var(--text);
-    border: 1px solid var(--border);
+    color: rgba(246, 239, 242, 0.7);
+    border: 1px solid rgba(232, 197, 132, 0.16);
     display: grid;
     place-items: center;
     cursor: pointer;
     transition: background 0.2s ease, color 0.2s ease,
-        transform 0.15s ease;
+        transform 0.15s ease, border-color 0.2s ease;
     -webkit-tap-highlight-color: transparent;
 }
 
 .cart__remove:hover {
-    background: #ff3b5c;
-    color: var(--black);
+    background: rgba(255, 59, 92, 0.2);
+    border-color: rgba(255, 59, 92, 0.5);
+    color: #ff5c7c;
 }
 
 .cart__remove:active {
@@ -254,14 +323,15 @@
 }
 
 .cart__remove:focus-visible {
-    outline: 2px solid #ff3b5c;
+    outline: 2px solid var(--gold);
     outline-offset: 2px;
 }
 
+/* ---------- Футер ---------- */
 .cart__footer {
     flex-shrink: 0;
     padding: 20px 24px calc(20px + env(safe-area-inset-bottom, 0px));
-    border-top: 1px solid var(--border);
+    border-top: 1px solid rgba(232, 197, 132, 0.12);
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -274,6 +344,10 @@
     display: inline-flex;
     align-items: center;
     gap: 10px;
+    padding: 17px 24px;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 15px;
 }
 
 .cart__alt {
@@ -288,9 +362,10 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    color: var(--text-muted);
-    font-weight: 700;
-    font-size: 14px;
+    font-family: "Inter", system-ui, sans-serif;
+    color: rgba(246, 239, 242, 0.7);
+    font-weight: 500;
+    font-size: 13.5px;
     transition: color 0.2s ease;
     text-decoration: none;
 }
@@ -299,11 +374,18 @@
     color: var(--pink);
 }
 
+.cart__alt-btn:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
 .cart__clear {
     background: none;
     border: none;
     padding: 0;
-    color: var(--text-dim);
+    font-family: "Inter", system-ui, sans-serif;
+    color: rgba(246, 239, 242, 0.4);
     font-size: 13px;
     text-decoration: underline;
     cursor: pointer;
@@ -317,31 +399,39 @@
 .cart__clear:focus-visible {
     outline: 2px solid var(--gold);
     outline-offset: 3px;
+    border-radius: 4px;
 }
 
+/* ---------- Мобильный ---------- */
 @media (max-width: 400px) {
     .cart__header {
-        padding: 16px 18px;
+        padding: 18px 18px;
     }
 
     .cart__header h2 {
-        font-size: 20px;
+        font-size: 24px;
     }
 
     .cart__items {
         padding: 16px 18px;
+        gap: 12px;
     }
 
     .cart__item {
         grid-template-columns: 60px minmax(0, 1fr) auto;
         gap: 10px;
         padding: 10px;
+        border-radius: 18px;
     }
 
     .cart__item img {
         width: 60px;
         height: 60px;
         border-radius: 12px;
+    }
+
+    .cart__item-info h4 {
+        font-size: 16px;
     }
 
     .cart__footer {
@@ -352,13 +442,24 @@
         justify-content: flex-start;
         gap: 14px;
     }
+
+    .cart__empty-icon {
+        font-size: 48px;
+    }
+
+    .cart__empty-text {
+        font-size: 22px;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
 
     .cart,
     .cart-backdrop,
-    .cart__item {
+    .cart__item,
+    .cart__close,
+    .cart__qty button,
+    .cart__remove {
         transition: none !important;
     }
 }

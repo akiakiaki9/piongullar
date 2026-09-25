@@ -11,12 +11,20 @@ export default function Footer() {
     return (
         <footer id="contacts" className="footer">
             <div className="container footer__inner">
-                {/* ---------- О бренде ---------- */}
+                {/* ---------- Бренд ---------- */}
                 <div className="footer__col footer__col--brand">
-                    <div className="footer__logo">
+                    <a
+                        href="#top"
+                        className="footer__logo"
+                        aria-label="Pion Gullar — на главную"
+                    >
                         <span>Pion</span>
                         <span>Gullar</span>
-                    </div>
+                    </a>
+
+                    <p className="footer__tag">
+                        ЦВЕТЫ · БУКЕТЫ · ЭМОЦИИ
+                    </p>
 
                     <p className="footer__desc">
                         Эксклюзивные букеты с доставкой по Бухаре.
@@ -32,6 +40,7 @@ export default function Footer() {
                             target="_blank"
                             rel="noreferrer noopener"
                             aria-label="Instagram Pion Gullar"
+                            className="footer__social-link footer__social-link--instagram"
                         >
                             <FiInstagram aria-hidden="true" />
                         </a>
@@ -40,6 +49,7 @@ export default function Footer() {
                             target="_blank"
                             rel="noreferrer noopener"
                             aria-label="Telegram-канал Pion Gullar"
+                            className="footer__social-link footer__social-link--telegram"
                         >
                             <FaTelegramPlane aria-hidden="true" />
                         </a>
@@ -48,8 +58,11 @@ export default function Footer() {
                             target="_blank"
                             rel="noreferrer noopener"
                             aria-label="Telegram-бот для заказов"
+                            className="footer__social-link footer__social-link--bot"
                         >
-                            <HiOutlineChatBubbleLeftRight aria-hidden="true" />
+                            <HiOutlineChatBubbleLeftRight
+                                aria-hidden="true"
+                            />
                         </a>
                     </nav>
                 </div>
@@ -60,8 +73,12 @@ export default function Footer() {
 
                     <address className="footer__contacts">
                         <a href="tel:+998914088685">
-                            <FiPhone aria-hidden="true" />
-                            <span>+998 91 408 86 85</span>
+                            <span className="footer__contact-icon">
+                                <FiPhone aria-hidden="true" />
+                            </span>
+                            <span className="footer__contact-text">
+                                +998 91 408 86 85
+                            </span>
                         </a>
 
                         <a
@@ -69,15 +86,21 @@ export default function Footer() {
                             target="_blank"
                             rel="noreferrer noopener"
                         >
-                            <FiMapPin aria-hidden="true" />
-                            <span>
+                            <span className="footer__contact-icon">
+                                <FiMapPin aria-hidden="true" />
+                            </span>
+                            <span className="footer__contact-text">
                                 Улица Хафиза Таниша Бухари, 44
                             </span>
                         </a>
 
                         <span className="footer__text">
-                            <FiClock aria-hidden="true" />
-                            <span>9:00–22:00 · по звонку 24/7</span>
+                            <span className="footer__contact-icon">
+                                <FiClock aria-hidden="true" />
+                            </span>
+                            <span className="footer__contact-text">
+                                8:00–23:00 · по звонку 24/7
+                            </span>
                         </span>
                     </address>
                 </div>

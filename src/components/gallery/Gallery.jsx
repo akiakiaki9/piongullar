@@ -18,7 +18,7 @@ export default function Gallery() {
             Array.from({ length: TOTAL_PHOTOS }, (_, i) => ({
                 id: String(i + 1),
                 src: `/images/data/${i + 1}.png`,
-                alt: `Букет №${i + 1} — PionGullar`,
+                alt: `Букет №${i + 1} — Pion Gullar`,
             })),
         []
     );
@@ -90,11 +90,11 @@ export default function Gallery() {
                 <div className="gallery__head">
                     <span className="gallery__eyebrow">НАША КОЛЛЕКЦИЯ</span>
                     <h2 className="gallery__title">
-                        Выберите <span>свой букет</span>
+                        Выберите <em>свой букет</em>
                     </h2>
                     <p className="gallery__desc">
-                        Нажмите на фото, чтобы узнать подробнее и добавить в
-                        корзину.
+                        Каждый букет собран вручную. Нажмите на фото, чтобы
+                        рассмотреть детали и добавить в корзину.
                     </p>
                 </div>
 

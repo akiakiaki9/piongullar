@@ -15,18 +15,28 @@ const links = [
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
+    const [pastHero, setPastHero] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
     const { count, setIsOpen } = useCart();
 
     /* ---------- Скролл-детект ---------- */
     useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 40);
+        const onScroll = () => {
+            const y = window.scrollY;
+            setScrolled(y > 40);
+            // 100vh — конец Hero
+            setPastHero(y > window.innerHeight);
+        };
         onScroll();
         window.addEventListener("scroll", onScroll, { passive: true });
-        return () => window.removeEventListener("scroll", onScroll);
+        window.addEventListener("resize", onScroll, { passive: true });
+        return () => {
+            window.removeEventListener("scroll", onScroll);
+            window.removeEventListener("resize", onScroll);
+        };
     }, []);
 
-    /* ---------- Блокировка скролла при открытом меню ---------- */
+    /* ---------- Блокировка скролла ---------- */
     useEffect(() => {
         if (!mobileOpen) return;
 
@@ -65,34 +75,36 @@ export default function Navbar() {
     }, [mobileOpen]);
 
     /* ---------- Плавный скролл к якорю ---------- */
-    const handleAnchor = useCallback((e, href) => {
-        e.preventDefault();
+    const handleAnchor = useCallback(
+        (e, href) => {
+            e.preventDefault();
 
-        // если меню открыто — закрываем и ждём, пока body вернётся в поток
-        const wasOpen = mobileOpen;
-        setMobileOpen(false);
+            const wasOpen = mobileOpen;
+            setMobileOpen(false);
 
-        const doScroll = () => {
-            if (href === "#top") {
-                window.scrollTo({ top: 0, behavior: "smooth" });
-                return;
+            const doScroll = () => {
+                if (href === "#top") {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                    return;
+                }
+                const el = document.querySelector(href);
+                if (!el) return;
+                const headerOffset = 72;
+                const top =
+                    el.getBoundingClientRect().top +
+                    window.pageYOffset -
+                    headerOffset;
+                window.scrollTo({ top, behavior: "smooth" });
+            };
+
+            if (wasOpen) {
+                setTimeout(doScroll, 260);
+            } else {
+                doScroll();
             }
-            const el = document.querySelector(href);
-            if (!el) return;
-            const headerOffset = 72;
-            const top =
-                el.getBoundingClientRect().top +
-                window.pageYOffset -
-                headerOffset;
-            window.scrollTo({ top, behavior: "smooth" });
-        };
-
-        if (wasOpen) {
-            setTimeout(doScroll, 260);
-        } else {
-            doScroll();
-        }
-    }, [mobileOpen]);
+        },
+        [mobileOpen]
+    );
 
     return (
         <>
@@ -100,7 +112,8 @@ export default function Navbar() {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className={`navbar ${scrolled ? "navbar--scrolled" : ""}`}
+                className={`navbar ${scrolled ? "navbar--scrolled" : ""} ${pastHero ? "navbar--past-hero" : ""
+                    }`}
             >
                 <div className="container navbar__inner">
                     <a
@@ -109,8 +122,18 @@ export default function Navbar() {
                         onClick={(e) => handleAnchor(e, "#top")}
                         aria-label="PionGullar — на главную"
                     >
-                        <span className="navbar__logo-pion">Pion</span>
-                        <span className="navbar__logo-gullar">Gullar</span>
+                        <img
+                            src="/images/logo.png"
+                            alt=""
+                            className="navbar__logo-mark"
+                            aria-hidden="true"
+                        />
+                        <span className="navbar__logo-text">
+                            <span className="navbar__logo-pion">Pion</span>
+                            <span className="navbar__logo-gullar">
+                                Gullar
+                            </span>
+                        </span>
                     </a>
 
                     <nav
@@ -134,7 +157,7 @@ export default function Navbar() {
                             href="https://t.me/piongullar_bot"
                             target="_blank"
                             rel="noreferrer noopener"
-                            className="navbar__icon"
+                            className="navbar__icon navbar__icon--tg"
                             aria-label="Telegram бот"
                         >
                             <FaTelegramPlane aria-hidden="true" />
@@ -196,7 +219,6 @@ export default function Navbar() {
                 </div>
             </motion.header>
 
-            {/* ---------- Полноэкранное мобильное меню ---------- */}
             <AnimatePresence>
                 {mobileOpen && (
                     <motion.div

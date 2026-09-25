@@ -56,7 +56,7 @@ export default function CartDrawer() {
         };
     }, [isOpen]);
 
-    /* ---------- Escape + блокировка скролла «под» модалкой ---------- */
+    /* ---------- Escape + автофокус ---------- */
     useEffect(() => {
         if (!isOpen) return;
 
@@ -65,13 +65,12 @@ export default function CartDrawer() {
         };
         window.addEventListener("keydown", onKey);
 
-        // автофокус на кнопку закрытия — важно для доступности
         closeBtnRef.current?.focus();
 
         return () => window.removeEventListener("keydown", onKey);
     }, [isOpen, setIsOpen]);
 
-    /* ---------- Простой focus trap ---------- */
+    /* ---------- Focus trap ---------- */
     useEffect(() => {
         if (!isOpen) return;
 
@@ -103,7 +102,6 @@ export default function CartDrawer() {
 
     const handleContinueShopping = () => {
         setIsOpen(false);
-        // даём drawer закрыться, потом скроллим к галерее
         setTimeout(() => {
             document.querySelector("#gallery")?.scrollIntoView({
                 behavior: "smooth",
@@ -171,8 +169,18 @@ export default function CartDrawer() {
 
                         {items.length === 0 ? (
                             <div className="cart__empty">
-                                <span aria-hidden="true">🌸</span>
-                                <p>Здесь пока пусто</p>
+                                <span
+                                    className="cart__empty-icon"
+                                    aria-hidden="true"
+                                >
+                                    🌸
+                                </span>
+                                <p className="cart__empty-text">
+                                    Здесь пока пусто
+                                </p>
+                                <p className="cart__empty-hint">
+                                    Выберите букет — и он появится тут
+                                </p>
                                 <button
                                     type="button"
                                     className="btn-primary cart__empty-btn"
@@ -189,12 +197,23 @@ export default function CartDrawer() {
                                             <motion.li
                                                 key={item.id}
                                                 layout
-                                                initial={{ opacity: 0, y: 16 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                exit={{ opacity: 0, x: -40 }}
+                                                initial={{
+                                                    opacity: 0,
+                                                    y: 16,
+                                                }}
+                                                animate={{
+                                                    opacity: 1,
+                                                    y: 0,
+                                                }}
+                                                exit={{
+                                                    opacity: 0,
+                                                    x: -40,
+                                                }}
                                                 transition={{
                                                     duration: 0.25,
-                                                    ease: [0.22, 1, 0.36, 1],
+                                                    ease: [
+                                                        0.22, 1, 0.36, 1,
+                                                    ],
                                                 }}
                                                 className="cart__item"
                                             >
@@ -207,7 +226,9 @@ export default function CartDrawer() {
                                                 />
 
                                                 <div className="cart__item-info">
-                                                    <h4>Букет №{item.id}</h4>
+                                                    <h4>
+                                                        Букет №{item.id}
+                                                    </h4>
                                                     <span className="cart__item-note">
                                                         Цена по запросу
                                                     </span>
@@ -222,7 +243,8 @@ export default function CartDrawer() {
                                                             onClick={() =>
                                                                 updateQty(
                                                                     item.id,
-                                                                    item.qty - 1
+                                                                    item.qty -
+                                                                    1
                                                                 )
                                                             }
                                                             aria-label="Уменьшить количество"
@@ -237,7 +259,8 @@ export default function CartDrawer() {
                                                             onClick={() =>
                                                                 updateQty(
                                                                     item.id,
-                                                                    item.qty + 1
+                                                                    item.qty +
+                                                                    1
                                                                 )
                                                             }
                                                             aria-label="Увеличить количество"
@@ -283,7 +306,7 @@ export default function CartDrawer() {
                                         <a
                                             href="https://t.me/piongullar_bot"
                                             target="_blank"
-                                            rel="noreferrer"
+                                            rel="noreferrer noopener"
                                             className="cart__alt-btn"
                                         >
                                             <FaTelegramPlane aria-hidden="true" />

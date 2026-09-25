@@ -1,27 +1,58 @@
+/* =========================================================
+   Footer — нежный премиум-стиль
+   ========================================================= */
+
 .footer {
+    position: relative;
     background: linear-gradient(180deg,
             var(--black) 0%,
             var(--black-2) 100%);
-    border-top: 1px solid var(--border);
     color: var(--text);
     margin-top: 100px;
+    overflow: hidden;
+}
+
+/* Тонкая золотая линия сверху */
+.footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(232, 197, 132, 0.3) 30%,
+            rgba(255, 77, 141, 0.25) 70%,
+            transparent);
+    opacity: 0.7;
 }
 
 .footer__inner {
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 48px;
-    padding: 72px 20px 48px;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 64px;
+    padding: 80px 20px 56px;
+    position: relative;
+    z-index: 1;
 }
 
+/* ---------- Логотип и подпись ---------- */
 .footer__logo {
-    font-size: 28px;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    display: flex;
-    gap: 4px;
-    margin-bottom: 16px;
+    font-family: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+    font-size: 34px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    display: inline-flex;
+    gap: 6px;
+    margin-bottom: 6px;
     line-height: 1;
+    text-decoration: none;
+    transition: opacity 0.25s ease;
+}
+
+.footer__logo:hover {
+    opacity: 0.85;
 }
 
 .footer__logo span:first-child {
@@ -30,57 +61,105 @@
 
 .footer__logo span:last-child {
     color: var(--pink);
+    font-style: italic;
+    font-weight: 500;
+}
+
+.footer__tag {
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(246, 239, 242, 0.42);
+    margin: 0 0 20px;
 }
 
 .footer__desc {
-    color: var(--text-muted);
-    line-height: 1.6;
-    margin: 0 0 24px;
-    font-size: 14px;
-    max-width: 420px;
+    font-family: "Inter", system-ui, sans-serif;
+    color: rgba(246, 239, 242, 0.68);
+    line-height: 1.65;
+    margin: 0 0 28px;
+    font-size: 14.5px;
+    max-width: 400px;
 }
 
+/* ---------- Соцсети (фирменные цвета) ---------- */
 .footer__socials {
     display: flex;
     gap: 12px;
 }
 
-.footer__socials a {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: rgba(255, 77, 141, 0.1);
-    color: var(--gold);
-    border: 1px solid var(--border);
+.footer__social-link {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
     display: grid;
     place-items: center;
-    font-size: 18px;
-    transition: background 0.3s ease, color 0.3s ease,
-        transform 0.3s ease;
+    font-size: 20px;
+    color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease,
+        filter 0.3s ease;
     -webkit-tap-highlight-color: transparent;
+    text-decoration: none;
 }
 
-.footer__socials a:hover {
-    background: linear-gradient(135deg, var(--pink), var(--gold));
-    color: var(--black);
+.footer__social-link--instagram {
+    background: radial-gradient(circle at 30% 110%,
+            #fdf497 0%,
+            #fdf497 5%,
+            #fd5949 45%,
+            #d6249f 60%,
+            #285aeb 90%);
+    box-shadow: 0 8px 22px rgba(214, 36, 159, 0.35);
+}
+
+.footer__social-link--telegram {
+    background: linear-gradient(135deg, #2aabee 0%, #229ed9 100%);
+    box-shadow: 0 8px 22px rgba(34, 158, 217, 0.4);
+}
+
+.footer__social-link--bot {
+    background: linear-gradient(135deg, #ff5c9a 0%, #ff85b5 100%);
+    color: #2a0d0f;
+    box-shadow: 0 8px 22px rgba(255, 92, 154, 0.35);
+}
+
+.footer__social-link:hover {
     transform: translateY(-3px);
+    filter: brightness(1.08);
 }
 
-.footer__socials a:active {
+.footer__social-link--instagram:hover {
+    box-shadow: 0 12px 30px rgba(214, 36, 159, 0.55);
+}
+
+.footer__social-link--telegram:hover {
+    box-shadow: 0 12px 30px rgba(34, 158, 217, 0.6);
+}
+
+.footer__social-link--bot:hover {
+    box-shadow: 0 12px 30px rgba(255, 92, 154, 0.55);
+}
+
+.footer__social-link:active {
     transform: translateY(-1px);
 }
 
-.footer__socials a:focus-visible {
+.footer__social-link:focus-visible {
     outline: 3px solid var(--gold);
-    outline-offset: 2px;
+    outline-offset: 3px;
 }
 
+/* ---------- Контакты ---------- */
 .footer__heading {
-    font-size: 16px;
-    font-weight: 700;
-    margin: 0 0 20px;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 24px;
     color: var(--text);
-    letter-spacing: 0.01em;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
 }
 
 .footer__contacts {
@@ -94,15 +173,23 @@
 .footer__contacts .footer__text {
     display: flex;
     align-items: flex-start;
-    gap: 10px;
-    padding: 8px 0;
-    font-size: 14px;
-    line-height: 1.45;
-    color: var(--text-muted);
+    gap: 12px;
+    padding: 10px 0;
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: rgba(246, 239, 242, 0.75);
     transition: color 0.25s ease;
+    text-decoration: none;
 }
 
 .footer__contacts a:hover {
+    color: var(--pink);
+}
+
+.footer__contacts a:hover .footer__contact-icon {
+    border-color: rgba(255, 77, 141, 0.5);
+    background: rgba(255, 77, 141, 0.14);
     color: var(--pink);
 }
 
@@ -112,18 +199,33 @@
     border-radius: 6px;
 }
 
-.footer__contacts svg {
-    font-size: 18px;
-    color: var(--gold);
+.footer__contact-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
     flex-shrink: 0;
-    margin-top: 2px;
+    background: rgba(232, 197, 132, 0.08);
+    border: 1px solid rgba(232, 197, 132, 0.2);
+    color: var(--gold);
+    font-size: 16px;
+    transition: background 0.25s ease, border-color 0.25s ease,
+        color 0.25s ease;
 }
 
+.footer__contact-text {
+    padding-top: 7px;
+}
+
+/* ---------- Нижняя строка ---------- */
 .footer__bottom {
-    border-top: 1px solid var(--border);
+    position: relative;
+    border-top: 1px solid rgba(232, 197, 132, 0.1);
     padding: 24px 0;
+    font-family: "Inter", system-ui, sans-serif;
     font-size: 13px;
-    color: var(--text-dim);
+    color: rgba(246, 239, 242, 0.42);
 }
 
 .footer__bottom-inner {
@@ -144,7 +246,7 @@
 
 .footer__dev a {
     color: var(--gold);
-    font-weight: 700;
+    font-weight: 600;
     text-decoration: none;
     border-bottom: 1px solid transparent;
     transition: color 0.25s ease, border-color 0.25s ease;
@@ -161,6 +263,10 @@
     border-radius: 4px;
 }
 
+/* =========================================================
+   Адаптив
+   ========================================================= */
+
 @media (max-width: 800px) {
     .footer {
         margin-top: 72px;
@@ -168,8 +274,8 @@
 
     .footer__inner {
         grid-template-columns: 1fr;
-        gap: 36px;
-        padding: 56px 20px 40px;
+        gap: 44px;
+        padding: 64px 20px 44px;
     }
 
     .footer__desc {
@@ -183,33 +289,52 @@
     }
 
     .footer__inner {
-        padding: 40px 16px 32px;
-        gap: 28px;
+        padding: 48px 16px 36px;
+        gap: 36px;
     }
 
     .footer__logo {
-        font-size: 24px;
+        font-size: 28px;
+    }
+
+    .footer__tag {
+        font-size: 9px;
+        letter-spacing: 0.26em;
+        margin-bottom: 16px;
     }
 
     .footer__desc {
         font-size: 13.5px;
+        margin-bottom: 22px;
     }
 
-    .footer__socials a {
-        width: 40px;
-        height: 40px;
-        font-size: 17px;
+    .footer__social-link {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+        border-radius: 14px;
     }
 
     .footer__heading {
-        font-size: 15px;
-        margin-bottom: 14px;
+        font-size: 20px;
+        margin-bottom: 18px;
     }
 
     .footer__contacts a,
     .footer__contacts .footer__text {
         font-size: 13.5px;
-        padding: 6px 0;
+        padding: 8px 0;
+    }
+
+    .footer__contact-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 11px;
+        font-size: 15px;
+    }
+
+    .footer__contact-text {
+        padding-top: 6px;
     }
 
     .footer__bottom {
@@ -225,10 +350,14 @@
     }
 }
 
+/* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
 
-    .footer__socials a,
-    .footer__contacts a {
+    .footer__social-link,
+    .footer__contacts a,
+    .footer__contact-icon,
+    .footer__logo,
+    .footer__dev a {
         transition: none !important;
     }
 }

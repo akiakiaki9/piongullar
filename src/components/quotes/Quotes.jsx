@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import "./quotes.css";
 
 const quotes = [
@@ -25,35 +24,29 @@ export default function Quotes() {
                 <div className="quotes__head">
                     <span className="quotes__eyebrow">О ЦВЕТАХ</span>
                     <h2 className="quotes__title">
-                        Слова, <span>которые дарят</span> тепло
+                        Слова, <em>которые дарят</em> тепло
                     </h2>
+                    <p className="quotes__lead">
+                        Мы верим, что букет — это не просто цветы.
+                        Это язык, на котором говорят, когда слов не хватает.
+                    </p>
                 </div>
 
                 <div className="quotes__grid">
                     {quotes.map((q, i) => (
-                        <motion.blockquote
-                            key={i}
-                            className="quotes__card"
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-60px" }}
-                            transition={{
-                                duration: 0.55,
-                                delay: i * 0.12,
-                                ease: [0.22, 1, 0.36, 1],
-                            }}
-                        >
-                            <span
-                                className="quotes__mark"
-                                aria-hidden="true"
-                            >
-                                ❝
+                        <figure className="quotes__card" key={i}>
+                            <span className="quotes__mark" aria-hidden="true">
+                                &ldquo;
                             </span>
-                            <p className="quotes__text">{q.text}</p>
-                            <footer className="quotes__author">
-                                — {q.author}
-                            </footer>
-                        </motion.blockquote>
+
+                            <blockquote className="quotes__text">
+                                {q.text}
+                            </blockquote>
+
+                            <figcaption className="quotes__author">
+                                {q.author}
+                            </figcaption>
+                        </figure>
                     ))}
                 </div>
             </div>

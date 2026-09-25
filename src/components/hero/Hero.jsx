@@ -1,9 +1,20 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FiArrowDown, FiTruck, FiClock, FiPhone } from "react-icons/fi";
-import Blobs from "@/components/decor/Blobs";
+import {
+    FiArrowRight,
+    FiPhone,
+    FiTruck,
+    FiClock,
+    FiMapPin,
+} from "react-icons/fi";
+import { FaTelegramPlane } from "react-icons/fa";
+import { FiInstagram } from "react-icons/fi";
 import "./hero.css";
+
+const PHONE = "+998914088685";
+const PHONE_DISPLAY = "+998 91 408 86 85";
+const ADDRESS = "Хафиза Таниша, 44";
 
 export default function Hero() {
     const scrollToGallery = () => {
@@ -19,86 +30,146 @@ export default function Hero() {
 
     return (
         <section id="top" className="hero">
-            <Blobs />
+            {/* Фоновое фото */}
+            <div className="hero__bg" aria-hidden="true">
+                <img
+                    src="/images/hero.png"
+                    alt=""
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
+                />
+                <div className="hero__bg-overlay" />
+            </div>
 
             <div className="container hero__inner">
+                {/* Шапка: лого + соцсети */}
+                <div className="hero__top">
+                    <div className="hero__brand">
+                        <span className="hero__brand-name">
+                            Pion <span>Gullar</span>
+                        </span>
+                        <span className="hero__brand-tag">
+                            ЦВЕТЫ · БУКЕТЫ · ЭМОЦИИ
+                        </span>
+                    </div>
+
+                    <div className="hero__top-actions">
+                        <a
+                            href="https://t.me/Pion_gullaruz"
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            className="hero__top-icon"
+                            aria-label="Telegram Pion Gullar"
+                        >
+                            <FaTelegramPlane aria-hidden="true" />
+                        </a>
+                        <a
+                            href="https://www.instagram.com/pion.gullar.bukhara/"
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            className="hero__top-icon"
+                            aria-label="Instagram Pion Gullar"
+                        >
+                            <FiInstagram aria-hidden="true" />
+                        </a>
+                        <a
+                            href={`tel:${PHONE}`}
+                            className="hero__top-icon"
+                            aria-label="Позвонить"
+                        >
+                            <FiPhone aria-hidden="true" />
+                        </a>
+                    </div>
+                </div>
+
+                {/* Контент */}
                 <motion.div
-                    initial={{ opacity: 0, y: 40 }}
+                    initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                     className="hero__content"
                 >
-                    <span className="hero__badge">
-                        <span className="hero__badge-dot" aria-hidden="true" />
-                        Бухара · доставка сегодня
-                    </span>
-
                     <h1 className="hero__title">
-                        Эксклюзивные <br />
-                        <span>букеты</span> для <br />
-                        особых моментов
+                        Эксклюзивные{" "}
+                        <span className="hero__title-accent">букеты</span>{" "}
+                        для особых моментов
                     </h1>
 
                     <p className="hero__subtitle">
-                        Свежие пионы, авторская упаковка и быстрая доставка по Бухаре.
-                        Работаем 9:00–22:00, по звонку — 24/7.
+                        Свежие пионы, авторская упаковка и быстрая доставка
+                        по Бухаре.
                     </p>
 
                     <div className="hero__actions">
                         <button
                             type="button"
-                            className="btn-primary hero__btn"
+                            className="hero__btn hero__btn--primary"
                             onClick={scrollToGallery}
                         >
-                            Выбрать букет <FiArrowDown aria-hidden="true" />
+                            Выбрать букет
+                            <FiArrowRight aria-hidden="true" />
                         </button>
 
                         <a
-                            href="tel:+998914088685"
-                            className="btn-outline hero__btn"
+                            href={`tel:${PHONE}`}
+                            className="hero__btn hero__btn--ghost"
                         >
-                            <FiPhone aria-hidden="true" /> Позвонить
+                            <FiPhone aria-hidden="true" />
+                            Позвонить
                         </a>
                     </div>
 
                     <ul className="hero__features" role="list">
                         <li className="hero__feature">
-                            <FiTruck aria-hidden="true" />
-                            <span>Быстрая доставка по городу</span>
+                            <span className="hero__feature-icon">
+                                <FiClock aria-hidden="true" />
+                            </span>
+                            <span className="hero__feature-text">
+                                Работаем 8:00–23:00
+                                <br />
+                                по звонку — 24/7
+                            </span>
                         </li>
+
                         <li className="hero__feature">
-                            <FiClock aria-hidden="true" />
-                            <span>Заказ 24/7 по звонку</span>
+                            <span className="hero__feature-icon">
+                                <FiPhone aria-hidden="true" />
+                            </span>
+                            <span className="hero__feature-text">
+                                <a
+                                    href={`tel:${PHONE}`}
+                                    className="hero__feature-link"
+                                >
+                                    {PHONE_DISPLAY}
+                                </a>
+                                <br />
+                                звоните в любое время
+                            </span>
+                        </li>
+
+                        <li className="hero__feature">
+                            <span className="hero__feature-icon">
+                                <FiMapPin aria-hidden="true" />
+                            </span>
+                            <span className="hero__feature-text">
+                                Адрес: {ADDRESS}
+                                <br />
+                                Бухара, Узбекистан
+                            </span>
+                        </li>
+
+                        <li className="hero__feature">
+                            <span className="hero__feature-icon">
+                                <FiTruck aria-hidden="true" />
+                            </span>
+                            <span className="hero__feature-text">
+                                Быстрая доставка
+                                <br />
+                                по городу
+                            </span>
                         </li>
                     </ul>
-                </motion.div>
-
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1, delay: 0.2 }}
-                    className="hero__visual"
-                >
-                    <div className="hero__img-wrap">
-                        <img
-                            src="/images/data/1.png"
-                            alt="Пионы Pion Gullar"
-                            loading="lazy"
-                            decoding="async"
-                        />
-                    </div>
-
-                    <motion.div
-                        className="hero__badge-floating"
-                        animate={{ y: [0, -12, 0] }}
-                        transition={{
-                            duration: 4,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                        }}
-                    >
-                        🌸 Свежие каждый день
-                    </motion.div>
                 </motion.div>
             </div>
         </section>
