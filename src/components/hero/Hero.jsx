@@ -35,7 +35,7 @@ export default function Hero() {
                 <img
                     src="/images/hero.png"
                     alt=""
-                    loading="eager"
+                    loading="lazy"
                     decoding="async"
                     fetchPriority="high"
                 />

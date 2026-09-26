@@ -126,6 +126,7 @@ export default function Navbar() {
                             src="/images/logo.png"
                             alt=""
                             className="navbar__logo-mark"
+                            loading="lazy"
                             aria-hidden="true"
                         />
                         <span className="navbar__logo-text">
