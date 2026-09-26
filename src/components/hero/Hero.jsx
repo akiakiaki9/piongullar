@@ -33,7 +33,7 @@ export default function Hero() {
             {/* Фоновое фото */}
             <div className="hero__bg" aria-hidden="true">
                 <img
-                    src="/images/hero.png"
+                    src="/images/hero.PNG"
                     alt=""
                     loading="lazy"
                     decoding="async"

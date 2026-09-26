@@ -123,7 +123,7 @@ export default function Navbar() {
                         aria-label="PionGullar — на главную"
                     >
                         <img
-                            src="/images/logo.png"
+                            src="/images/logo.PNG"
                             alt=""
                             className="navbar__logo-mark"
                             loading="lazy"
