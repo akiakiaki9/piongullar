@@ -52,7 +52,7 @@ Telegram-канал: https://t.me/Pion_gullaruz
 Instagram: https://www.instagram.com/pion.gullar.bukhara/
 Сайт: ${SITE_URL}
 
-Работаем ежедневно *9:00–22:00*.
+Работаем ежедневно *8:00–23:00*.
 По звонку — *24/7*.`,
 
     hours: `🕘 *Часы работы*
