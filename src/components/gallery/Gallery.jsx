@@ -7,7 +7,7 @@ import { useCart } from "@/context/CartContext";
 import "./gallery.css";
 
 // сколько фото у вас в /public/images/data/
-const TOTAL_PHOTOS = 34;
+const TOTAL_PHOTOS = 52;
 
 export default function Gallery() {
     const [activeIndex, setActiveIndex] = useState(null);
